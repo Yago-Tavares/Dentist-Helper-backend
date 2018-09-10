@@ -1,0 +1,20 @@
+{
+  "name": "dentist-helper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node loader.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yago-Tavares/Dentist-Helper-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yago-Tavares/Dentist-Helper-backend/issues"
+  },
+  "homepage": "https://github.com/Yago-Tavares/Dentist-Helper-backend#readme"
+}
