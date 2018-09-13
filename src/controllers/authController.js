@@ -105,10 +105,10 @@ router.post('/forgot', function(req, res, next) {
                 to: user.email,
                 from: 'passwordreset@demo.com',
                 subject: 'Node.js Password Reset',
-                text: 'Você está recebendo esta mensagem porque você (ou alguem) requisitou a redefinição de senha da sua conta.\n\n' +
-                'Clique no link, ou cole no seu navegador para completar o processo:\n\n' +
+                text: 'Você está recebendo esta mensagem porque você (ou alguém) solicitou a redefinição de senha da sua conta.\n\n' +
+                'Clique no link ou cole no seu navegador para completar o processo:\n\n' +
                 'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-                'Se você não requisitou a redefinição de senha, ignore o email e sua senha permanecerá a mesma.\n'
+                'Se você não solicitou a redefinição de senha, ignore o email e sua senha permanecerá a mesma.\n'
             };
             transporter.sendMail(mailOptions, function(err) {
                 res.status(200).send({message: 'An e-mail has been sent to ' + user.email + ' with further instructions.'});
@@ -155,7 +155,7 @@ router.post('/reset/:token', function(req, res) {
                 from: 'dentist.helperp1@gmail.com',
                 subject: 'Your password has been changed',
                 text: 'Olá,\n\n' +
-                'Este email é para confirmar que a senha da sua conta  ' + user.email + ' no Dentist Helper foi alterada.\n'
+                'Você redefiniu com sucesso a senha da sua conta  ' + user.email + ' no Dentist Helper.\n'
             };
             transporter.sendMail(mailOptions, function(err) {
                 res.status(200).send({message: 'Success! Your password has been changed.'});
