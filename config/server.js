@@ -1,15 +1,13 @@
-const port = 3030
-const bodyParser = require('body-parser')
-const express = require('express')
-const server = express()
+const port = 3030;
+const bodyParser = require('body-parser');
+const express = require('express');
+const server = express();
 
-server.use(bodyParser.urlencoded({extended: true}))
-server.use(bodyParser.json())
+server.use(bodyParser.urlencoded({extended: true}));
+server.use(bodyParser.json());
 
 server.listen(process.env.port || port, function() {
     console.log('Listening on')
-})
+});
 
-server.get('/', (req, res) => {res.json({message: oi})})
-
-module.exports = server
+module.exports = server;

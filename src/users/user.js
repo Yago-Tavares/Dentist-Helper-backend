@@ -1,6 +1,6 @@
-const restful = require('node-restful')
+const restful = require('node-restful');
 const bcrypt = require("bcryptjs");
-const mongoose = restful.mongoose
+const mongoose = restful.mongoose;
 
 const userSchema = new mongoose.Schema({
     name: {type: String, required: true},
@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     type: {type: String, enum: ['CLIENT', 'DENTIST', 'SECRETARY'], default: 'CLIENT', required: true},
     resetPasswordToken: String,
     resetPasswordExpires: Date
-})
+});
 
 userSchema.pre('save', async function (next) {
 
