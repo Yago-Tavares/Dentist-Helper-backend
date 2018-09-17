@@ -10,4 +10,6 @@ server.listen(process.env.port || port, function() {
     console.log('Listening on')
 })
 
+server.get('/', (req, res) => {res.json({message: oi})})
+
 module.exports = server
