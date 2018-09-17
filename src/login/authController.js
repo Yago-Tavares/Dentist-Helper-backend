@@ -164,4 +164,8 @@ exports.reset_password = function(req, res) {
     });
 };
 
+exports.update_password = function (req, res) {
+    
+}
+
 module.exports = exports;
