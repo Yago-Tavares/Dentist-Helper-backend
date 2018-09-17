@@ -1,24 +1,20 @@
-const express = require('express');
 const bcrypt = require('bcryptjs');
 const async = require('async');
 const jwt = require('jsonwebtoken');
 const User = require('../users/user');
-const authConfig = require('../../config/auth');
+const secret = require('../../config/secret');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
-const router = express.Router();
-
-
 function generateToken( params = {}){
 
-    return jwt.sign(params, authConfig.secret, {
+    return jwt.sign(params, secret, {
         expiresIn: 86400
     });
 
 }
 
-router.post('/register', async(req, res) => {
+exports.register = async(req, res) => {
 
     const {email} = req.body;
 
@@ -41,8 +37,9 @@ router.post('/register', async(req, res) => {
     }
 
 
-});
-router.post('/authenticate', async (req, res) => {
+};
+
+exports.authenticate = async (req, res) => {
 
 
     const {email, password} = req.body;
@@ -64,9 +61,9 @@ router.post('/authenticate', async (req, res) => {
         token: generateToken({ id: user.id})
     });
 
-});
+};
 
-router.post('/forgot', function(req, res, next) {
+exports.forgot_password = function(req, res, next) {
     async.waterfall([
         function(done) {
             crypto.randomBytes(20, function(err, buf) {
@@ -119,9 +116,9 @@ router.post('/forgot', function(req, res, next) {
         if (err) return next(err);
         res.redirect('/forgot');
     });
-});
+};
 
-router.post('/reset/:token', function(req, res) {
+exports.reset_password = function(req, res) {
     async.waterfall([
         function(done) {
             User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
@@ -165,6 +162,6 @@ router.post('/reset/:token', function(req, res) {
     ], function(err) {
         res.status(400).send({error: err});
     });
-});
+};
 
-module.exports = router;
+module.exports = exports;
