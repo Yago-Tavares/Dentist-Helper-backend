@@ -7,11 +7,9 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
 function generateToken( params = {}){
-
     return jwt.sign(params, secret.secret, {
         expiresIn: 86400
     });
-
 }
 
 exports.register = async(req, res) => {
@@ -33,7 +31,7 @@ exports.register = async(req, res) => {
 
         return res.send({user, token: generateToken({id: user.id})});
     } catch (e) {
-        return res.status(400).send({error: 'Registration failed'});
+        return res.status(400).send({error: 'Registration failed. ' + e});
     }
 
 
