@@ -31,7 +31,7 @@ exports.register = async(req, res) => {
 
         return res.send({user, token: generateToken({id: user.id})});
     } catch (e) {
-        return res.status(400).send({error: 'Registration failed'});
+        return res.status(400).send({error: 'Registration failed. ' + e});
     }
 
 
