@@ -8,7 +8,7 @@ const nodemailer = require('nodemailer');
 
 function generateToken( params = {}){
 
-    return jwt.sign(params, secret, {
+    return jwt.sign(params, secret.secret, {
         expiresIn: 86400
     });
 
@@ -167,17 +167,18 @@ exports.reset_password = function(req, res) {
 exports.update_password = async(req,  res) => {
     try {
         const userId = req.params.id;
-        const user = await User.findOne(userId);
+        const user = await User.findById(userId);
         if(!user) {
             res.status(404).send({errorMessage: "User not found!"});
         }
 
         const oldPassword = req.body.oldPassword;
-        const newPassword  = req.body.newPassword;
+        var newPassword  = req.body.newPassword;
         const isValidPassword = bcrypt.compareSync(oldPassword, user.password);
 
         if (isValidPassword) {
-            await User.update({password: newPassword});
+            newPassword = await bcrypt.hash(newPassword, 10);
+            await User.update({ _id: userId }, { $set: { "password": newPassword } });
             res.status(201).send({message: "Password successful updated!"});
         }else {
             res.status(400).send({message: "Password not updated!"});
