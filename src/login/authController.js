@@ -7,11 +7,9 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
 function generateToken( params = {}){
-
-    return jwt.sign(params, secret, {
+    return jwt.sign(params, secret.secret, {
         expiresIn: 86400
     });
-
 }
 
 exports.register = async(req, res) => {
