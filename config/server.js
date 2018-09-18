@@ -9,8 +9,8 @@ server.use(bodyParser.json());
 server.use(cors());
 
 
-server.listen(process.env.PORT || 3030, function() {
-    console.log('Listening on')
+server.listen(port, function() {
+    console.log('Listening on port ' + port);
 });
 
 module.exports = server;

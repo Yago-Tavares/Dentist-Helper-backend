@@ -162,8 +162,29 @@ exports.reset_password = function(req, res) {
     });
 };
 
-exports.update_password = function (req, res) {
-    
-}
+exports.update_password = async(req,  res) => {
+    try {
+        const userId = req.params.id;
+        const user = await User.findById(userId);
+        if(!user) {
+            res.status(404).send({errorMessage: "User not found!"});
+        }
+
+        const oldPassword = req.body.oldPassword;
+        var newPassword  = req.body.newPassword;
+        const isValidPassword = bcrypt.compareSync(oldPassword, user.password);
+
+        if (isValidPassword) {
+            newPassword = await bcrypt.hash(newPassword, 10);
+            await User.update({ _id: userId }, { $set: { "password": newPassword } });
+            res.status(201).send({message: "Password successful updated!"});
+        }else {
+            res.status(400).send({message: "Password not updated!"});
+        }
+    }catch (error) {
+        res.status(500).send({errorMessage: error.message});
+
+    }
+};
 
 module.exports = exports;
