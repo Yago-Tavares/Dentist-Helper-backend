@@ -7,8 +7,8 @@ server.use(bodyParser.urlencoded({extended: true}));
 server.use(bodyParser.json());
 
 
-server.listen(process.env.PORT || 3030, function() {
-    console.log('Listening on')
+server.listen(port, function() {
+    console.log('Listening on port ' + port);
 });
 
 module.exports = server;
