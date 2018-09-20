@@ -2,12 +2,12 @@ const bcrypt = require('bcryptjs');
 const async = require('async');
 const jwt = require('jsonwebtoken');
 const User = require('../users/user');
-const secret = require('../../config/secret');
+const config = require('../../config/config');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
 function generateToken( params = {}){
-    return jwt.sign(params, secret.secret, {
+    return jwt.sign(params, config.secret, {
         expiresIn: 86400
     });
 }
@@ -72,7 +72,7 @@ exports.forgot_password = function(req, res, next) {
         function(token, done) {
             User.findOne({ email: req.body.email }, function(err, user) {
                 if (!user) {
-                    return res.status(400).send({error: 'Não existe uma conta com o endereço de email inserido.'});
+                    return res.status(400).send({error: 'Não existe uma conta com o endereço de e-mail inserido.'});
                 }
 
                 user.resetPasswordToken = token;
@@ -101,7 +101,7 @@ exports.forgot_password = function(req, res, next) {
                 subject: 'Dentist-Helper Password Reset',
                 text: 'Você está recebendo esta mensagem porque você (ou alguém) solicitou a redefinição de senha da sua conta.\n\n' +
                 'Clique no link ou cole no seu navegador para completar o processo:\n\n' +
-                'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                config["front-url"] + '/reset/' + token + '\n\n' +
                 'Se você não solicitou a redefinição de senha, ignore o email e sua senha permanecerá a mesma.\n'
             };
             transporter.sendMail(mailOptions, function(err) {
