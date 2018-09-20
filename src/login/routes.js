@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const authController = require('./authController');
+const authController = require('./controller');
 
-router.post('/authenticate', authController.authenticate);
+router.post('/login', authController.authenticate);
 router.post('/register', authController.register);
 router.post('/forgot', authController.forgot_password);
 router.post('/reset/:token', authController.reset_password);
