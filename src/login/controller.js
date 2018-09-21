@@ -2,12 +2,12 @@ const bcrypt = require('bcryptjs');
 const async = require('async');
 const jwt = require('jsonwebtoken');
 const User = require('../users/user');
-const secret = require('../../config/secret');
+const config = require('../../config/config');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
 function generateToken( params = {}){
-    return jwt.sign(params, secret.secret, {
+    return jwt.sign(params, config.secret, {
         expiresIn: 86400
     });
 }
@@ -19,7 +19,7 @@ exports.register = async(req, res) => {
     try{
 
         if ( await User.findOne({ email })){
-            return res.status(400).send({ error: "User already exists"});
+            return res.status(400).send({ error: "Usuário já existe."});
         }
 
         console.log(email);
@@ -31,7 +31,7 @@ exports.register = async(req, res) => {
 
         return res.send({user, token: generateToken({id: user.id})});
     } catch (e) {
-        return res.status(400).send({error: 'Registration failed. ' + e});
+        return res.status(400).send({error: 'Falha no cadastro. ' + e});
     }
 
 
@@ -45,11 +45,11 @@ exports.authenticate = async (req, res) => {
     const user = await User.findOne({ email }).select('+password');
 
     if (!user){
-        return res.status(400).send({ error: 'User not found'});
+        return res.status(400).send({ error: 'Usuário não encontrado.'});
     }
 
     if (! await bcrypt.compare(password, user.password)){
-        return res.status(400).send({error: 'Invalid password' });
+        return res.status(400).send({error: 'Senha incorreta.' });
     }
 
     user.password = undefined;
@@ -72,8 +72,7 @@ exports.forgot_password = function(req, res, next) {
         function(token, done) {
             User.findOne({ email: req.body.email }, function(err, user) {
                 if (!user) {
-                    req.status(400).send({error: 'No account with that email address exists.'});
-                    return res.redirect('/forgot');
+                    return res.status(400).send({error: 'Não existe uma conta com o endereço de e-mail inserido.'});
                 }
 
                 user.resetPasswordToken = token;
@@ -99,20 +98,19 @@ exports.forgot_password = function(req, res, next) {
             let mailOptions = {
                 to: user.email,
                 from: 'passwordreset@demo.com',
-                subject: 'Node.js Password Reset',
+                subject: 'Dentist-Helper Password Reset',
                 text: 'Você está recebendo esta mensagem porque você (ou alguém) solicitou a redefinição de senha da sua conta.\n\n' +
                 'Clique no link ou cole no seu navegador para completar o processo:\n\n' +
-                'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                config["front-url"] + '/reset/' + token + '\n\n' +
                 'Se você não solicitou a redefinição de senha, ignore o email e sua senha permanecerá a mesma.\n'
             };
             transporter.sendMail(mailOptions, function(err) {
-                res.status(200).send({message: 'An e-mail has been sent to ' + user.email + ' with further instructions.'});
+                res.status(200).send({message: 'Um email foi enviado para ' + user.email + ' com mais instruções.'});
                 done(err, 'done');
             });
         }
     ], function(err) {
         if (err) return next(err);
-        res.redirect('/forgot');
     });
 };
 
@@ -121,7 +119,7 @@ exports.reset_password = function(req, res) {
         function(done) {
             User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
                 if (!user) {
-                    return res.status(400).send({error: 'Password reset token is invalid or has expired.'});
+                    return res.status(400).send({error: 'Token de recuperação de senha expirado ou inválido.'});
                 }
 
                 user.password = req.body.password;
@@ -153,7 +151,7 @@ exports.reset_password = function(req, res) {
                 'Você redefiniu com sucesso a senha da sua conta  ' + user.email + ' no Dentist Helper.\n'
             };
             transporter.sendMail(mailOptions, function(err) {
-                res.status(200).send({message: 'Success! Your password has been changed.'});
+                res.status(200).send({message: 'A senha foi alterada.'});
                 //done(err);
             });
         }
@@ -167,7 +165,7 @@ exports.update_password = async(req,  res) => {
         const userId = req.params.id;
         const user = await User.findById(userId);
         if(!user) {
-            res.status(404).send({errorMessage: "User not found!"});
+            res.status(404).send({errorMessage: "Usuário não encontrado."});
         }
 
         const oldPassword = req.body.oldPassword;
@@ -177,9 +175,9 @@ exports.update_password = async(req,  res) => {
         if (isValidPassword) {
             newPassword = await bcrypt.hash(newPassword, 10);
             await User.update({ _id: userId }, { $set: { "password": newPassword } });
-            res.status(201).send({message: "Password successful updated!"});
+            res.status(201).send({message: "A senha foi alterada com sucesso."});
         }else {
-            res.status(400).send({message: "Password not updated!"});
+            res.status(400).send({message: "A senha não foi alterada. Você deve informar corretamente a senha anterior."});
         }
     }catch (error) {
         res.status(500).send({errorMessage: error.message});
