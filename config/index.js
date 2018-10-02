@@ -7,7 +7,7 @@ const swaggerDocument = require('./swaggerDoc/swagger.json');
 module.exports = function(server) {
     
     
-    server.use('/api', router);
+    // server.use('/api', router);
     server.use('/', login);
     server.use('/api-docs',swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     // const userService = require('../src/users/userService')
