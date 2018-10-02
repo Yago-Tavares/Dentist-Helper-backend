@@ -2,6 +2,9 @@ const bcrypt = require('bcryptjs');
 const async = require('async');
 const jwt = require('jsonwebtoken');
 const User = require('../users/user');
+const Dentist = require('../users/dentist');
+const Secretary = require('../users/secretary');
+const Client = require('../users/client');
 const config = require('../../config/config');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
@@ -44,9 +47,18 @@ exports.register = async(req, res) => {
             return res.status(400).send({ error: "Usuário já existe."});
         }
 
-        console.log(email);
-
-        const user = await User.create(req.body);
+        let user;
+        switch (req.body.type) {
+            case 'DENTIST':
+                user = await Dentist.create(req.body);
+                break;
+            case 'SECRETARY':
+                user = await Secretary.create(req.body);
+                break;
+            case 'CLIENT':
+                user = await Client.create(req.body);
+                break;
+        }
 
         user.password = undefined;
         console.log(user);
