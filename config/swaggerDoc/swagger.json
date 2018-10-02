@@ -48,7 +48,7 @@
         }
       },
 
-      "/forgot-password" : {
+      "/forgot" : {
         "post" : {
           "type": "object",
           "tags" : [ "Login" ],
