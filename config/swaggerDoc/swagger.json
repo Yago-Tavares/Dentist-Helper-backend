@@ -1,0 +1,129 @@
+{
+    "swagger" : "2.0",
+    "info" : {
+      "description" : "A Web Development class project.",
+      "version" : "1.0.0",
+      "title" : "Dentist Helper",
+      "license" : {
+        "name" : "MIT",
+        "url" : "https://opensource.org/licenses/MIT"
+      }
+    },
+  
+  
+    "host" : "localhost:3030",
+    "basePath" : "/api",
+    "tags" : [ {
+      "name" : "Login",
+      "description" : "API for users login in the system"
+    } ],
+    "schemes" : [ "http" ],
+    "consumes" : [ "application/json" ],
+    "produces" : [ "application/json" ],
+    "paths" : {
+      
+      "/login" : {
+        "post" : {
+          "type": "object",
+          "tags" : [ "Login" ],
+          "summary" : "Authenticate a user in the system",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "Username and Password",
+            "description" : "User that we want to authenticate",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          } ],
+          "responses" : {
+            "201" : {
+              "schema" : {
+                "$ref" : "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "/register" : {
+        "post" : {
+          "type": "object",
+          "tags" : [ "Login" ],
+          "summary" : "Register a user in the system",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "User",
+            "description" : "User that we want to register",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/Register"
+            }
+          } ],
+          "responses" : {
+            "201" : {
+              "description" : "user successfully registered",
+              "schema" : {
+                "$ref" : "#/definitions/Register - RESPONSE"
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "definitions" : {
+      "Register" : {
+        "required" : [ "name", "email", "password", "type" ],
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "name" : "User",
+          "email" : "user@email.com",
+          "password": "user123",
+          "type" : "CLIENT"
+        }
+      }, 
+
+      "Register - RESPONSE" : {
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          },
+          "token" : "string"
+        },
+        "example" : {
+          "user": {
+            "name" : "User",
+            "email" : "user@email.com",
+            "password": "user123",
+            "type" : "CLIENT"
+          },
+          "token": "string"
+        }
+      }
+
+  }
+}

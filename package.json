@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node loader.js",
+    "start": "nodemon loader.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -86,10 +86,14 @@
     "setprototypeof": "^1.1.0",
     "sliced": "^1.0.1",
     "statuses": "^1.5.0",
+    "swagger-ui-express": "^4.0.1",
     "type-is": "^1.6.16",
     "underscore": "^1.9.1",
     "unpipe": "^1.0.0",
     "utils-merge": "^1.0.1",
     "vary": "^1.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
   }
 }
