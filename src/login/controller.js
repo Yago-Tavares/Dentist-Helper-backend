@@ -2,34 +2,68 @@ const bcrypt = require('bcryptjs');
 const async = require('async');
 const jwt = require('jsonwebtoken');
 const User = require('../users/user');
+const Dentist = require('../users/dentist');
+const Secretary = require('../users/secretary');
+const Client = require('../users/client');
 const config = require('../../config/config');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
-function generateToken( params = {}){
-    return jwt.sign(params, config.secret, {
+function generateToken(user){
+    return jwt.sign({user}, config.secret, {
         expiresIn: 86400
     });
 }
+exports.verifyToken = async(req, res, next) => {
+    const token = req.headers['authorization'];
+    console.log("TOKEN ", token);
+    if (!token) return res.status(403).send({error: "Token não fornecido."});
 
+    jwt.verify(token, config.secret, (err, decoded) => {
+        let userDecoded = decoded.user;
+        if (err) return res.status(403).send({error: 'Falha ao autenticat token.' });
+
+        else if (userDecoded.user.type === 'DENTIST'){
+            if (req.body.type !== 'SECRETARY' && req.body.type !== 'CLIENT') return res.status(403).send({error: "Não autorizado!"});
+        }
+
+        else if (userDecoded.user.type === 'SECRETARY'){
+            if (req.body.type !== 'CLIENT') return res.status(403).send({error: "Não autorizado!"});
+        }
+
+        else if (userDecoded.user.type === 'CLIENT'){
+            return res.status(403).send({error: 'Não autorizado!'});
+        }
+
+        next();
+    });
+};
 exports.register = async(req, res) => {
 
     const {email} = req.body;
 
     try{
-
         if ( await User.findOne({ email })){
             return res.status(400).send({ error: "Usuário já existe."});
         }
 
-        console.log(email);
-
-        const user = await User.create(req.body);
+        let user;
+        switch (req.body.type) {
+            case 'DENTIST':
+                user = await Dentist.create(req.body);
+                break;
+            case 'SECRETARY':
+                user = await Secretary.create(req.body);
+                break;
+            case 'CLIENT':
+                user = await Client.create(req.body);
+                break;
+        }
 
         user.password = undefined;
         console.log(user);
 
-        return res.send({user, token: generateToken({id: user.id})});
+        return res.send({user, token: generateToken(user)});
     } catch (e) {
         return res.status(400).send({error: 'Falha no cadastro. ' + e});
     }
@@ -56,7 +90,7 @@ exports.authenticate = async (req, res) => {
 
     res.send({
         user,
-        token: generateToken({ id: user.id})
+        token: generateToken({user})
     });
 
 };
