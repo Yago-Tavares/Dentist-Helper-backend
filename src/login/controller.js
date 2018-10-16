@@ -5,6 +5,7 @@ const User = require('../users/user');
 const Dentist = require('../users/dentist');
 const Secretary = require('../users/secretary');
 const Client = require('../users/client');
+const Clinic = require('../users/clinic');
 const config = require('../../config/config');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
@@ -49,6 +50,9 @@ exports.register = async(req, res) => {
 
         let user;
         switch (req.body.type) {
+            case 'CLINIC':
+                user = await Clinic.create(req.body);
+                break;
             case 'DENTIST':
                 user = await Dentist.create(req.body);
                 break;
