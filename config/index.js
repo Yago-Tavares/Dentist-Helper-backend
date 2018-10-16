@@ -14,7 +14,7 @@ module.exports = function(server) {
     server.use('/', operation);
     server.use('/', clinic);
 
-    server.use('/api-docs',swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+    server.use('/',swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     // const userService = require('../src/users/userService')
     // userService.register(router, '/user');
 }
