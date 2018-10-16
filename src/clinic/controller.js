@@ -17,6 +17,7 @@ exports.verifyToken = async(req, res, next) => {
 
         next();
     });
+}
 
 exports.getAll = async (req, res) => {
     try {

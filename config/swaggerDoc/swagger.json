@@ -16,6 +16,19 @@
     "tags" : [ {
       "name" : "Login",
       "description" : "API for users login in the system"
+    },
+    {
+      "name": "User",
+      "description":"API for users"
+
+    },
+    {
+      "name": "Clinic",
+      "description": "API for clinic"
+    },
+    {
+      "name":"Operation",
+      "description": "API for operations"
     } ],
     "schemes" : [ "http" ],
     "consumes" : [ "application/json" ],
@@ -88,6 +101,12 @@
             "schema" : {
                 "$ref" : "#/definitions/Request - Reset Password"
               }
+          },
+          {
+            "in" : "path",
+            "name" : "token",
+            "description" : "Update token to email",
+            "required" : true
           } ],
           "responses" : {
             "200" : {
@@ -114,6 +133,12 @@
             "schema" : {
                 "$ref" : "#/definitions/Request - Update Password"
               }
+          },
+          {
+            "in" : "path",
+            "name" : "id",
+            "description" : "User ID",
+            "required" : true
           } ],
           "responses" : {
             "201" : {
@@ -146,6 +171,12 @@
             "schema" : {
               "$ref" : "#/definitions/Register"
             }
+          },
+          {
+            "in" : "header",
+            "name" : "token",
+            "description" : "Token when logged in",
+            "required" : true
           } ],
           "responses" : {
             "200" : {
@@ -159,7 +190,215 @@
             }
           }
         }
+      },
+
+      "/clinic/{id}" : {
+        "get" : {
+          "type": "object",
+          "tags" : [ "Clinic" ],
+          "summary" : "Return clinic by ID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "header",
+            "name" : "Token",
+            "description" : "Token when logged in",
+            "required" : true
+          },
+          {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Clinic ID",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Clinics returned!"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        }
+      },
+
+      "/clinic" : {
+        "get" : {
+          "type": "object",
+          "tags" : [ "Clinic" ],
+          "summary" : "Return all clinics",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "header",
+            "name" : "Token",
+            "description" : "Token when logged in",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "All clinics"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        },
+
+        "put" : {
+          "type": "object",
+          "tags" : [ "Clinic" ],
+          "summary" : "Update clinic by ID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "header",
+            "name" : "Token",
+            "description" : "Token when logged in",
+            "required" : true
+          },
+          {
+            "in" : "body",
+            "name" : "Update Clinic", 
+            "required" : true,
+            "schema" : {
+              "$ref":"#/definitions/Clinic"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Atualizado com sucesso!"
+            },
+            "400" : {
+                "description": "Falha ao atualizar."
+            }
+          }
+        },
+
+        "delete" : {
+          "type": "object",
+          "tags" : [ "Clinic" ],
+          "summary" : "Delete clinic by ID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "header",
+            "name" : "Token",
+            "description" : "Token when logged in",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Deletado com sucesso!"
+            },
+            "400" : {
+                "description": "Falha ao remover."
+            }
+          }
+        }
+
+      },
+
+      "/operation" : {
+        "post" : {
+          "type": "object",
+          "tags" : [ "Operation" ],
+          "summary" : "Register a operation in the system",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "Operation",
+            "description" : "Operation that we want to register",
+            "required" : true,
+            "schema" : {
+              "$ref":"#/definitions/Operation"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Operation successfully registered"
+            },
+            "400" : {
+                "description": "Falha ao Salvar."
+            }
+          }
+        },
+
+        "get" : {
+          "type": "object",
+          "tags" : [ "Operation" ],
+          "summary" : "Return all operations",
+          "produces" : [ "application/json" ],
+          "responses" : {
+            "200" : {
+              "description" : "All Operations"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        },
+
+        "put" : {
+          "type": "object",
+          "tags" : [ "Operation" ],
+          "summary" : "Update operation in user",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "Update Operation", 
+            "required" : true,
+            "schema" : {
+              "$ref":"#/definitions/Operation - UPDATE"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Atualizado com sucesso!"
+            },
+            "400" : {
+                "description": "Falha ao atualizar."
+            }
+          }
+        },
+
+        "delete" : {
+          "type": "object",
+          "tags" : [ "Operation" ],
+          "summary" : "Delete operation in the user",
+          "produces" : [ "application/json" ],
+          "responses" : {
+            "200" : {
+              "description" : "Deletado com sucesso!"
+            },
+            "400" : {
+                "description": "Falha ao remover."
+            }
+          }
+        }
+
+      },
+
+      "/operation/{id}" : {
+        "get" : {
+          "type": "object",
+          "tags" : [ "Operation" ],
+          "summary" : "Return operation by ID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Operation ID",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Operation returned!"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        }
       }
+
+
     },
 
     "definitions" : {
@@ -268,6 +507,70 @@
                 "oldPassword" : "user123",
                 "newPassword" : "user123#$"
             }
+        },
+
+        "Operation" : {
+        "required" : [ "title", "description", "date", "value" ],
+        "properties" : {
+          "title" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "date" : {
+            "type" : "Date"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        },
+
+        "example" : {
+          "title" : "Siso",
+          "description" : "Extrair o terceiro molar",
+          "date": "21/05/2016",
+          "value" : "R$ 30,00"
+        }
+        },
+
+        "Operation - UPDATE" : {  
+          "example" : {
+            "title" : "Canal",
+            "description" : "Canal no segundo molar",
+            "date": "18/08/2018",
+            "value" : "R$ 350,00"
+          }
+        },
+
+        "Clinic" : {
+          "required" : [ "name", "email", "password", "phone", "address" ],
+          "properties" : {
+            "name" : {
+              "type" : "string"
+            },
+            "email" : {
+              "type" : "string"
+            },
+            "password" : {
+              "type" : "Date"
+            },
+            "phone" : {
+              "type" : "Number",
+              "format": "int64"
+            },
+            "address" : {
+              "type" : "string"
+            }
+          },
+  
+          "example" : {
+            "name" : "Mega Dental",
+            "email" : "email@email.com",
+            "password": "clinica123",
+            "phone" : "99999-0000",
+            "address" : "Rua do Sol - N° 101"
+          }
         }
     }
 }

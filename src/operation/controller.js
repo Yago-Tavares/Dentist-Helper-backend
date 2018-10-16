@@ -27,7 +27,7 @@ exports.create = async (req, res) => {
     try{
         const operation = await Operation.create(req.body);
 
-        res.send(operation);
+        res.status(200).send(operation);
 
     } catch (e) {
         res.status(400).send({ error: 'Falha ao salvar. ' + e});
