@@ -11,7 +11,7 @@
     },
   
   
-    "host" : "https://dentist-helper.herokuapp.com",
+    "host" : "dentist-helper.herokuapp.com",
     "basePath" : "/",
     "tags" : [ {
       "name" : "Login",
@@ -436,8 +436,8 @@
             }
           },
           "example" : {
-            "email" : "user@email.com",
-            "password" : "user123"
+            "email" : "dales.fragoso@ccc.ufcg.edu.br",
+            "password" : "12345"
           }
         },
 
