@@ -11,7 +11,7 @@
     },
   
   
-    "host" : "localhost:3030",
+    "host" : "https://dentist-helper.herokuapp.com",
     "basePath" : "/",
     "tags" : [ {
       "name" : "Login",
