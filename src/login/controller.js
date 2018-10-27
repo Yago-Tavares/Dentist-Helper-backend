@@ -5,7 +5,7 @@ const User = require('../users/user');
 const Dentist = require('../users/dentist');
 const Secretary = require('../users/secretary');
 const Client = require('../users/client');
-const Clinic = require('../users/clinic');
+const Clinic = require('../users/clinic/model');
 const config = require('../../config/config');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
@@ -76,7 +76,6 @@ exports.register = async(req, res) => {
 };
 
 exports.authenticate = async (req, res) => {
-
 
     const {email, password} = req.body;
 

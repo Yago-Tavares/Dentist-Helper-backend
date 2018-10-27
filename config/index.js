@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const login = require('../src/login/routes');
 const operation = require('../src/operation/routes');
-const clinic = require('../src/clinic/routes')
+const clinic = require('../src/users/clinic/routes')
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swaggerDoc/swagger.json');
 

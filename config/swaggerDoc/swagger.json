@@ -11,7 +11,7 @@
     },
   
   
-    "host" : "dentist-helper.herokuapp.com",
+    "host" : "localhost:3030",
     "basePath" : "/",
     "tags" : [ {
       "name" : "Login",
@@ -200,7 +200,7 @@
           "produces" : [ "application/json" ],
           "parameters" : [ {
             "in" : "header",
-            "name" : "Token",
+            "name" : "Authorization",
             "description" : "Token when logged in",
             "required" : true
           },
@@ -218,6 +218,33 @@
                 "description": "Error"
             }
           }
+        },
+
+        "delete" : {
+          "type": "object",
+          "tags" : [ "Clinic" ],
+          "summary" : "Delete clinic by ID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "header",
+            "name" : "Authorization",
+            "description" : "Token when logged in",
+            "required" : true
+          },
+          {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Clinic ID",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Deletado com sucesso!"
+            },
+            "400" : {
+                "description": "Falha ao remover."
+            }
+          }
         }
       },
 
@@ -229,7 +256,7 @@
           "produces" : [ "application/json" ],
           "parameters" : [ {
             "in" : "header",
-            "name" : "Token",
+            "name" : "Authorization",
             "description" : "Token when logged in",
             "required" : true
           } ],
@@ -250,7 +277,7 @@
           "produces" : [ "application/json" ],
           "parameters" : [ {
             "in" : "header",
-            "name" : "Token",
+            "name" : "Authorization",
             "description" : "Token when logged in",
             "required" : true
           },
@@ -259,7 +286,33 @@
             "name" : "Update Clinic", 
             "required" : true,
             "schema" : {
-              "$ref":"#/definitions/Clinic"
+              "required" : [ "id", "name", "email", "phone", "address" ],
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                },
+                "email" : {
+                  "type" : "string"
+                },
+                "phone" : {
+                  "type" : "Number",
+                  "format": "int64"
+                },
+                "address" : {
+                  "type" : "string"
+                }
+              },
+      
+              "example" : {
+                "id" : "123456",
+                "name" : "Mega Dental",
+                "email" : "email@email.com",
+                "phone" : "99999-0000",
+                "address" : "Rua do Sol - N° 101"
+              }
             }
           } ],
           "responses" : {
@@ -268,27 +321,6 @@
             },
             "400" : {
                 "description": "Falha ao atualizar."
-            }
-          }
-        },
-
-        "delete" : {
-          "type": "object",
-          "tags" : [ "Clinic" ],
-          "summary" : "Delete clinic by ID",
-          "produces" : [ "application/json" ],
-          "parameters" : [ {
-            "in" : "header",
-            "name" : "Token",
-            "description" : "Token when logged in",
-            "required" : true
-          } ],
-          "responses" : {
-            "200" : {
-              "description" : "Deletado com sucesso!"
-            },
-            "400" : {
-                "description": "Falha ao remover."
             }
           }
         }
