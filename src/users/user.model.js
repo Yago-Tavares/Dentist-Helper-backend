@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+
     email: {
         type: String,
         validate: {
@@ -17,16 +18,33 @@ const userSchema = new mongoose.Schema({
         },
         required: true
     },
+
     password: {
         type: String,
-        required: true}
-        ,
+        required: true
+    },
+
     type: {
         type: String,
         enum: ['CLIENT', 'DENTIST', 'SECRETARY', 'CLINIC'],
         default: 'CLIENT',
         required: true
     },
+    
+    address: { 
+        type: String, 
+        required: false
+    },
+    
+    phone: { type: String, 
+        required: false 
+    },
+
+    cpf: { 
+        type: String, 
+        required: false 
+    },
+
     resetPasswordToken: String,
     resetPasswordExpires: Date
 });

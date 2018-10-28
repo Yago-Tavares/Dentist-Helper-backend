@@ -1,6 +1,6 @@
 const Clinic = require('./model');
 const jwt = require('jsonwebtoken');
-const config = require('../../../config/config');
+const config = require('../.././config/config.json');
 
 
 exports.verifyToken = async(req, res, next) => {

@@ -1,6 +1,6 @@
 const restful = require('node-restful');
 const mongoose = restful.mongoose;
-const user = require('./user');
+const user = require('../users/user.model');
 
 const clinicSchema = user.discriminator('clinic', new mongoose.Schema({
     phone: { type: String, required: false },

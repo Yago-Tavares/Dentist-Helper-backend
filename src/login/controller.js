@@ -1,11 +1,11 @@
 const bcrypt = require('bcryptjs');
 const async = require('async');
 const jwt = require('jsonwebtoken');
-const User = require('../users/user');
-const Dentist = require('../users/dentist');
-const Secretary = require('../users/secretary');
-const Client = require('../users/client');
-const Clinic = require('../users/clinic/model');
+const User = require('../users/user.model');
+const Dentist = require('../dentist/dentist');
+const Secretary = require('../secretary/secretary');
+const Client = require('../client/client');
+const Clinic = require('../clinic/model');
 const config = require('../../config/config');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
@@ -39,6 +39,7 @@ exports.verifyToken = async(req, res, next) => {
         next();
     });
 };
+
 exports.register = async(req, res) => {
 
     const {email} = req.body;
@@ -65,7 +66,6 @@ exports.register = async(req, res) => {
         }
 
         user.password = undefined;
-        console.log(user);
 
         return res.send({user, token: generateToken(user)});
     } catch (e) {
