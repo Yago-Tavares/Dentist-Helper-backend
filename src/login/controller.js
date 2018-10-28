@@ -52,15 +52,21 @@ exports.register = async(req, res) => {
         let user;
         switch (req.body.type) {
             case 'CLINIC':
+            console.log('entra aqui CLINIC');
                 user = await Clinic.create(req.body);
                 break;
             case 'DENTIST':
+                console.log('entra aqui DENTIST');
                 user = await Dentist.create(req.body);
                 break;
             case 'SECRETARY':
+                console.log('entra aqui SECRETARY');
                 user = await Secretary.create(req.body);
                 break;
             case 'CLIENT':
+                console.log('entra aqui CLIENT');
+                //tem que chamar o controller de cliente e verificar
+                // se o cliente tem um dentista ja pra add
                 user = await Client.create(req.body);
                 break;
         }

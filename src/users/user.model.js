@@ -2,6 +2,11 @@ const restful = require('node-restful');
 const bcrypt = require("bcryptjs");
 const mongoose = restful.mongoose;
 
+const baseOptions = {
+    discriminatorKey: '_type',
+    collection: 'users'
+};
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -24,12 +29,12 @@ const userSchema = new mongoose.Schema({
         required: true
     },
 
-    type: {
-        type: String,
-        enum: ['CLIENT', 'DENTIST', 'SECRETARY', 'CLINIC'],
-        default: 'CLIENT',
-        required: true
-    },
+    // type: {
+    //     type: String,
+    //     enum: ['CLIENT', 'DENTIST', 'SECRETARY', 'CLINIC'],
+    //     default: 'CLIENT',
+    //     required: true
+    // },
     
     address: { 
         type: String, 
@@ -47,7 +52,7 @@ const userSchema = new mongoose.Schema({
 
     resetPasswordToken: String,
     resetPasswordExpires: Date
-});
+}, baseOptions);
 
 userSchema.pre('save', async function (next) {
     if(this.password) {

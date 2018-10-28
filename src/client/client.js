@@ -2,12 +2,16 @@ const restful = require('node-restful');
 const mongoose = restful.mongoose;
 const user = require('../users/user.model');
 
-const clientSchema = user.discriminator('client', new mongoose.Schema({
-    rg: { type: String, required: false },
-    allergies: { type: String, required: false },
-    treatment_start_date: { type: String, required: false },
-    treatment_end_date: { type: String, required: false }
+const clientSchema = user.discriminator('CLIENT', new mongoose.Schema({
+    dentist: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'DENTIST',
+        default: null
+    },
+    allergies: { type: String, required: false, default: 'Não possui alergias' },
+    treatment_start_date: { type: String, required: false, default: 'Faltando a data de inicio' },
+    treatment_end_date: { type: String, required: false, default: 'Faltando a data de fim' }
 }));
 
-module.exports =restful.model('client');
+module.exports =restful.model('CLIENT');
 
