@@ -4,6 +4,7 @@ const login = require('../src/login/routes');
 const operation = require('../src/operation/routes');
 const clinic = require('../src/clinic/routes');
 const dentist = require('../src/dentist/dentist.routes');
+const client = require('../src/client/routes');
 const user = require('../src/users/user.routes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swaggerDoc/swagger.json');
@@ -16,6 +17,7 @@ module.exports = function(server) {
     server.use('/', operation);
     server.use('/', clinic);
     server.use('/', dentist);
+    server.use('/', client);
     server.use('/', user);
 
     server.use('/',swaggerUi.serve, swaggerUi.setup(swaggerDocument));

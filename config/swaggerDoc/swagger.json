@@ -31,6 +31,10 @@
       "description": "API for dentist"
     },
     {
+      "name": "Client",
+      "description": "API for client"
+    },
+    {
       "name":"Operation",
       "description": "API for operations"
     } ],
@@ -472,6 +476,190 @@
           }
         }
 
+      },
+
+      "/client/{id}" : {
+        "get" : {
+          "type": "object",
+          "tags" : [ "Client" ],
+          "summary" : "Return client by ID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "header",
+            "name" : "Authorization",
+            "description" : "Token when logged in",
+            "required" : true
+          },
+          {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Client ID",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Clients returned!"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        },
+
+        "delete" : {
+          "type": "object",
+          "tags" : [ "Client" ],
+          "summary" : "Delete client by ID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "header",
+            "name" : "Authorization",
+            "description" : "Token when logged in",
+            "required" : true
+          },
+          {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Client ID",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Deletado com sucesso!"
+            },
+            "400" : {
+                "description": "Falha ao remover."
+            }
+          }
+        }
+      },
+
+      "/client" : {
+        "get" : {
+          "type": "object",
+          "tags" : [ "Client" ],
+          "summary" : "Return all clients",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "header",
+            "name" : "Authorization",
+            "description" : "Token when logged in",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "All clients"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        },
+
+        "put" : {
+          "type": "object",
+          "tags" : [ "Client" ],
+          "summary" : "Update Client by ID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "header",
+            "name" : "Authorization",
+            "description" : "Token when logged in",
+            "required" : true
+          },
+          {
+            "in" : "body",
+            "name" : "Update Client", 
+            "required" : true,
+            "schema" : {
+              "required" : [ "id", "name", "email", "phone", "address", "cpf", "dentist", "allergies", "treatment_start_date", "treatment_end_date" ],
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                },
+                "email" : {
+                  "type" : "string"
+                },
+                "phone" : {
+                  "type" : "Number",
+                  "format": "int64"
+                },
+                "address" : {
+                  "type" : "string"
+                },
+                "cpf" : {
+                  "type" : "string"
+                },
+                "dentist" : {
+                  "type" : "string"
+                },
+                "allergies" : {
+                  "type" : "string"
+                },
+                "treatment_start_date" : {
+                  "type" : "string"
+                },
+                "treatment_end_date" : {
+                  "type" : "string"
+                }
+              },
+      
+              "example" : {
+                "id" : "123456",
+                "name" : "Mega Dental",
+                "email" : "email@email.com",
+                "phone" : "99999-0000",
+                "address" : "Rua do Sol - N° 101",
+                "cpf" : "999.999.999-99",
+                "dentist" : "1",
+                "allergies" : "Nenhuma",
+                "treatment_start_date" : "10/10/2010",
+                "treatment_end_date" : "10/10/2018"
+              }
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Atualizado com sucesso!"
+            },
+            "400" : {
+                "description": "Falha ao atualizar."
+            }
+          }
+        }
+
+      },
+
+      "/dentist/list-client/{id}" : {
+        "get" : {
+          "type": "object",
+          "tags" : [ "Client" ],
+          "summary" : "Return all clients by Dentist ID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "header",
+            "name" : "Authorization",
+            "description" : "Token when logged in",
+            "required" : true
+          },
+          {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Dentist ID",
+            "required" : true
+          }  ],
+          "responses" : {
+            "200" : {
+              "description" : "All clients"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        }
       },
 
       "/operation" : {
