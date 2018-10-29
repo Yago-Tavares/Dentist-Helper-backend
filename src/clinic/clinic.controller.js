@@ -1,4 +1,4 @@
-const Clinic = require('./model');
+const Clinic = require('./clinic.model');
 const jwt = require('jsonwebtoken');
 const config = require('../.././config/config.json');
 const clinicService = require('./clinic.service');
