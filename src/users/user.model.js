@@ -38,16 +38,20 @@ const userSchema = new mongoose.Schema({
     
     address: { 
         type: String, 
-        required: false
+        required: false,
+        default: "Não informado"
     },
     
-    phone: { type: String, 
-        required: false 
+    phone: { 
+        type: String, 
+        required: false,
+        default: "Não informado"
     },
 
     cpf: { 
         type: String, 
-        required: false 
+        required: false,
+        default: "Não informado" 
     },
 
     resetPasswordToken: String,

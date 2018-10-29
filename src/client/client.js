@@ -9,6 +9,12 @@ const clientSchema = user.discriminator('CLIENT', new mongoose.Schema({
         default: null,
         required: true
     },
+    clinic: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'clinic',
+        required: true,
+        default: null
+    },
     allergies: { type: String, required: false, default: 'Não possui alergias' },
     treatment_start_date: { type: String, required: false, default: 'Faltando a data de inicio' },
     treatment_end_date: { type: String, required: false, default: 'Faltando a data de fim' }

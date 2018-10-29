@@ -1,6 +1,7 @@
 const Clinic = require('./model');
 const jwt = require('jsonwebtoken');
 const config = require('../.././config/config.json');
+const clinicService = require('./clinic.service');
 
 
 exports.verifyToken = async(req, res, next) => {
@@ -66,6 +67,40 @@ exports.update = async (req, res) => {
     } catch (e) {
         console.log(e);
         res.status(400).send('Falha ao atualizar. ' + e);
+    }
+};
+
+exports.getAllDentist = async (req, res) => {
+    try {
+        await clinicService.getAllDentists(req.params.id, (response) => {
+            res.status(response.status).send(response.data);
+        });
+
+    } catch (error) {
+        res.status(response.status).send(response.data);
+    }
+};
+
+
+exports.getAllClients = async (req, res) => {
+    try {
+        await clinicService.getAllClients(req.params.id, (response) => {
+            res.status(response.status).send(response.data);
+        });
+
+    } catch (error) {
+        res.status(response.status).send(response.data);
+    }
+};
+
+exports.getAllSecretaries = async (req, res) => {
+    try {
+        await clinicService.getAllSecretaries(req.params.id, (response) => {
+            res.status(response.status).send(response.data);
+        });
+
+    } catch (error) {
+        res.status(response.status).send(response.data);
     }
 };
 
