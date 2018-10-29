@@ -19,51 +19,52 @@ exports.verifyToken = async(req, res, next) => {
     });
 }
 
-exports.getAll = async (req, res) => {
+exports.getAll = ('/getAll', async (req, res) => {
     try {
-        const dentists = await Dentist.find({});
-
-        res.status(200).send(dentists);
+        await dentistService.getAllDentists((response) => {
+            res.status(response.status).send(response);
+        });
     } catch (err) {
         res.status(400).send({ error: err.message});
     }
 
-};
+});
 
-exports.getOne = async (req, res) => {
+exports.getOne = ('/getOne', async (req, res) => {
     try {
-        const dentist = await Dentist.findById(req.params.id);
 
-        res.status(200).send(dentist);
+        await dentistService.getOne(req.params.id, (response) => {
+            res.status(response.status).send(response);
+        });
     } catch (e) {
         res.status(400).send({ error: e});
     }
 
-};
+});
 
-exports.delete = async (req, res) => {
+exports.update = ('/update-dentist', async (req, res) => {
     try {
-        const dentistId = req.params.id;
-        const dentist = await Dentist.deleteOne({ _id: dentistId});
-        res.status(200).send('Deletado com sucesso!')
-    } catch (e) {
-        res.status(400).send('Falha ao remover. ' + e);
-    }
-};
-
-exports.update = async (req, res) => {
-    try {
-        const dentist = await Dentist.findOneAndUpdate({ _id: req.body.id}, req.body);
-
-        res.status(200).send('Atualizado com sucesso!');
-
+        await dentistService.updateDentist(req.params.id, (response) => {
+            res.status(response.status).send(response);
+        });
     } catch (e) {
         console.log(e);
         res.status(400).send('Falha ao atualizar. ' + e);
     }
-};
+});
 
-exports.getAllClients = ('/getAll', async (req, res) => {
+exports.delete = ('/delete-dentist', async (req, res) => {
+    try {
+        const dentistId = req.params.id;
+        await dentistService.delete(dentistId, (response) => {
+            res.status(response.status).send(response);
+        });
+    } catch (e) {
+        res.status(400).send('Falha ao remover. ' + e);
+    }
+});
+
+exports.getAllClients = ('/getAll',async (req, res) => {
 
     try {
         await dentistService.getAllClients((req.params.id, (response) => {

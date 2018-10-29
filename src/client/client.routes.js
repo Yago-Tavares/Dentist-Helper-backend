@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const clientController = require('./controller');
+const clientController = require('./client.controller');
 
 router.get('/client', clientController.verifyToken, clientController.getAll);
 router.get('/client/:id', clientController.verifyToken, clientController.getOne); 

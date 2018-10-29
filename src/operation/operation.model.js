@@ -4,19 +4,23 @@ const mongoose = restful.mongoose;
 const operationSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: [true, 'Nome da Operação é obrigatório'],
+        trim: true
     },
     description: {
         type: String,
-        required: true
+        required: [true, 'Descrição da Operação é obrigatório'],
+        trim: true
     },
     date: {
         type: Date,
-        required: true
+        required: [true, 'Data da operação é obrigatória'],
+        trim: true
     },
     value: {
         type: Number,
-        required: true
+        required: [true, 'Valor da operação é obrigatório'],
+        trim: true
     }
 });
 

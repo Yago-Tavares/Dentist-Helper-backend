@@ -10,11 +10,13 @@ const baseOptions = {
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
+        trim: true,
         required: true
     },
 
     email: {
         type: String,
+        trim: true,
         validate: {
             validator: function(personalEmail) {
                 return new RegExp('^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$').test(personalEmail)
@@ -26,34 +28,31 @@ const userSchema = new mongoose.Schema({
 
     password: {
         type: String,
+        trim: true,
         required: true
     },
 
-    // type: {
-    //     type: String,
-    //     enum: ['CLIENT', 'DENTIST', 'SECRETARY', 'CLINIC'],
-    //     default: 'CLIENT',
-    //     required: true
-    // },
-    
     address: { 
         type: String, 
+        trim: true,
         required: false,
-        default: "Não informado"
+        default: "Endereço não Informado"
     },
     
     phone: { 
-        type: String, 
+        type: String,
+        trim: true,
         required: false,
-        default: "Não informado"
+        default: "Telefone não informado"
     },
 
     cpf: { 
-        type: String, 
+        type: String,
+        trim: true, 
         required: false,
-        default: "Não informado" 
+        default: "CPF não informado" 
     },
-
+    
     resetPasswordToken: String,
     resetPasswordExpires: Date
 }, baseOptions);
