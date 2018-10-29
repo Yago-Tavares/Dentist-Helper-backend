@@ -11,7 +11,7 @@ exports.verifyToken = async(req, res, next) => {
     jwt.verify(token, config.secret, (err, decoded) => {
         let userDecoded = decoded.user;
         if (err) return res.status(403).send({error: 'Falha ao autenticat token.' });
-        else if (userDecoded.user.type !== 'CLINIC'){
+        else if (userDecoded.user._type !== 'clinic'){
             return res.status(403).send({error: "Não autorizado!"});
         }
 
