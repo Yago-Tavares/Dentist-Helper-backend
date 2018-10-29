@@ -7,7 +7,7 @@ const dentistSchema = user.discriminator('DENTIST', new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'client'
     }],
-    
+    rg: { type: String, required: false, default: "-"},    
     cro: { type: Number, required: false, default: 0 }
 }));
 

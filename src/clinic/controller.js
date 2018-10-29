@@ -4,6 +4,7 @@ const config = require('../.././config/config.json');
 
 
 exports.verifyToken = async(req, res, next) => {
+    console.log('teste');
     const token = req.headers['authorization'];
     console.log("TOKEN ", token);
     if (!token) return res.status(403).send({error: "Token não fornecido."});
