@@ -1,10 +1,11 @@
-const Dentist = require('../users/user.model');
+const Dentist = require('../dentist/dentist.model');
+const Client = require('../client/client.model');
 const response = require('../util/responses');
 
 
 exports.getAllDentists = async (callback) => {
 
-    await Dentist.findById({}).then((result) => {
+    await Dentist.find({}).then((result) => {
         if(result) callback(response.ok('Busca concluída', result));
         else callback(response.notFound('Nenhum dentista registrado'));
 
@@ -18,10 +19,8 @@ exports.getOne = async (dentistId, callback) => {
 
     await Dentist.findById({_id: dentistId}).then((result) => {
         if(result) callback(response.ok('Busca concluída', result));
-        else callback(response.notFound('ID não encontrado!'));
-
     }).catch((err) => {
-        callback(response.badRequest(err.message));
+        callback(response.notFound('ID não encontrado!'));
     });
 
 };
@@ -38,31 +37,27 @@ exports.deleteDentist = async (dentistId, callback) => {
 
 };
 
-exports.updateDentist = async (dentistId, callback) => {
+exports.updateDentist = async (dentistId, update, callback) => {
 
-    await Dentist.findByIdAndUpdate({_id: dentistId}).then((result) => {
+    await Dentist.findByIdAndUpdate({_id: dentistId}, {$set: update}).then((result) => {
         if(result) callback(response.ok('Dentista Atualizado!', result));
         else callback(response.internalError());
 
     }).catch((err) => {
-        callback(response.badRequest(err.message));
+        callback(response.notFound('Não foi possivel atualizar. ID não encontrado!'));
     });
 
 };
 
 exports.getAllClients = async (dentistId, callback) => {
 
-    await Dentist.findById(dentistId).then((result) => {
-        callback({
-            status: 200,
-            data: result
-        });
-
+    await Client.find({dentist: dentistId}, '-password -_type').then((result) => {
+        if(result == 0) {
+            callback(response.notFound('Nenhum cliente cadastrado'));
+        }
+        else callback(response.ok('Busca Concluida com Sucesso!', result));
     }).catch((err) => {
-        callback({
-            status: 400,
-            data: 'ID não encontrado'
-        });
+        callback(response.internalError());
     });
 
 };

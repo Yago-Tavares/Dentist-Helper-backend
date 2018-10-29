@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const clinicController = require('./controller');
+const clinicController = require('./clinic.controller');
 
 router.get('/clinic', clinicController.verifyToken, clinicController.getAll);
 router.get('/clinic/:id', clinicController.verifyToken, clinicController.getOne); 

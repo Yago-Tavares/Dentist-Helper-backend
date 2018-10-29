@@ -73,11 +73,11 @@ exports.update = async (req, res) => {
 exports.getAllDentist = async (req, res) => {
     try {
         await clinicService.getAllDentists(req.params.id, (response) => {
-            res.status(response.status).send(response.data);
+            res.status(response.status).send(response);
         });
 
     } catch (error) {
-        res.status(response.status).send(response.data);
+        res.status(response.status).send(response);
     }
 };
 
@@ -85,22 +85,22 @@ exports.getAllDentist = async (req, res) => {
 exports.getAllClients = async (req, res) => {
     try {
         await clinicService.getAllClients(req.params.id, (response) => {
-            res.status(response.status).send(response.data);
+            res.status(response.status).send(response);
         });
 
     } catch (error) {
-        res.status(response.status).send(response.data);
+        res.status(response.status).send(response);
     }
 };
 
 exports.getAllSecretaries = async (req, res) => {
     try {
         await clinicService.getAllSecretaries(req.params.id, (response) => {
-            res.status(response.status).send(response.data);
+            res.status(response.status).send(response);
         });
 
     } catch (error) {
-        res.status(response.status).send(response.data);
+        res.status(response.status).send(response);
     }
 };
 

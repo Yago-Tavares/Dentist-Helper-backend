@@ -10,4 +10,4 @@ const secretarySchema = user.discriminator('Secretary', new mongoose.Schema({
     }
 }));
 
-module.exports =restful.model('Secretary', secretarySchema);
+module.exports =restful.model('Secretary');

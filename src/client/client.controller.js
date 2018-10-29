@@ -1,4 +1,4 @@
-const Client = require('./client');
+const Client = require('./client.model');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config.json');
 

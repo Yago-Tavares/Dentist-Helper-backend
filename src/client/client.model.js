@@ -61,4 +61,4 @@ const clientSchema = User.discriminator('Client', new mongoose.Schema({
     tooth: [toothSchema]
 }));
 
-module.exports =restful.model('Client', clientSchema);
+module.exports =restful.model('Client');

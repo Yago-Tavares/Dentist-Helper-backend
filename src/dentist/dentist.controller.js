@@ -1,4 +1,4 @@
-const Dentist = require('./dentist');
+const Dentist = require('./dentist.model');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
 const dentistService = require('./dentist.service');
@@ -44,7 +44,7 @@ exports.getOne = ('/getOne', async (req, res) => {
 
 exports.update = ('/update-dentist', async (req, res) => {
     try {
-        await dentistService.updateDentist(req.params.id, (response) => {
+        await dentistService.updateDentist(req.params.id, req.body, (response) => {
             res.status(response.status).send(response);
         });
     } catch (e) {
@@ -56,7 +56,7 @@ exports.update = ('/update-dentist', async (req, res) => {
 exports.delete = ('/delete-dentist', async (req, res) => {
     try {
         const dentistId = req.params.id;
-        await dentistService.delete(dentistId, (response) => {
+        await dentistService.deleteDentist(dentistId, (response) => {
             res.status(response.status).send(response);
         });
     } catch (e) {
@@ -67,12 +67,11 @@ exports.delete = ('/delete-dentist', async (req, res) => {
 exports.getAllClients = ('/getAll',async (req, res) => {
 
     try {
-        await dentistService.getAllClients((req.params.id, (response) => {
-            res.status(response.status).send(response.data);
-        }));
+        await dentistService.getAllClients(req.params.id, (response) => {
+            res.status(response.status).send(response);
+        });
 
     } catch (error) {
-        console.log(error);
         res.status(response.status).send(response.data);
     }
 }); 

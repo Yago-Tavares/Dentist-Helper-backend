@@ -7,4 +7,4 @@ const clinicSchema = User.discriminator('Clinic', new mongoose.Schema({
     address: { type: String, required: false, default: 'Endereço não informado' }
 }));
 
-module.exports =restful.model('Clinic', clinicSchema);
+module.exports =restful.model('Clinic');

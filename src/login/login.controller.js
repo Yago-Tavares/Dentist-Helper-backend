@@ -2,9 +2,9 @@ const bcrypt = require('bcryptjs');
 const async = require('async');
 const jwt = require('jsonwebtoken');
 const User = require('../users/user.model');
-const Dentist = require('../dentist/dentist');
-const Secretary = require('../secretary/secretary');
-const Client = require('../client/client');
+const Dentist = require('../dentist/dentist.model');
+const Secretary = require('../secretary/secretary.model');
+const Client = require('../client/client.model');
 const Clinic = require('../clinic/clinic.model');
 const config = require('../../config/config');
 const crypto = require('crypto');
@@ -43,7 +43,6 @@ exports.verifyToken = async(req, res, next) => {
 exports.register = async(req, res) => {
 
     const {email} = req.body;
-
     try{
         if ( await User.findOne({ email })){
             return res.status(400).send({ error: "Usuário já existe."});
@@ -70,7 +69,6 @@ exports.register = async(req, res) => {
                 user = await Client.create(req.body);
                 break;
         }
-
         user.password = undefined;
 
         return res.send({user, token: generateToken(user)});
