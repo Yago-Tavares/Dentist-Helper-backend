@@ -3,11 +3,12 @@ const mongoose = restful.mongoose;
 const user = require('../users/user.model');
 
 const dentistSchema = user.discriminator('DENTIST', new mongoose.Schema({
-    clients: [{
+    clinic: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'client'
-    }],
-    
+        ref: 'clinic',
+        default: null
+    },
+    rg: { type: String, required: false, default: "-"},    
     cro: { type: Number, required: false, default: 0 }
 }));
 

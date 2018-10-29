@@ -48,6 +48,13 @@ const clientSchema = user.discriminator('CLIENT', new mongoose.Schema({
     dentist: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'DENTIST',
+        default: null,
+        required: true
+    },
+    clinic: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'clinic',
+        required: true,
         default: null
     },
     allergies: { type: String, required: false, default: 'Não possui alergias' },
