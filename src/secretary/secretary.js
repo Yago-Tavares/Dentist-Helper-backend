@@ -5,8 +5,7 @@ const user = require('../users/user.model');
 const secretarySchema = user.discriminator('SECRETARY', new mongoose.Schema({
     clinic: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'clinic',
-        required: true,
+        ref: 'CLINIC',
         default: null
     }
 }));

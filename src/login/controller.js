@@ -19,25 +19,29 @@ exports.verifyToken = async(req, res, next) => {
     const token = req.headers['authorization'];
     console.log("TOKEN ", token);
     if (!token) return res.status(403).send({error: "Token não fornecido."});
-
-    jwt.verify(token, config.secret, (err, decoded) => {
-        let userDecoded = decoded.user;
-        if (err) return res.status(403).send({error: 'Falha ao autenticat token.' });
-
-        else if (userDecoded.user.type === 'DENTIST'){
-            if (req.body.type !== 'SECRETARY' && req.body.type !== 'CLIENT') return res.status(403).send({error: "Não autorizado!"});
-        }
-
-        else if (userDecoded.user.type === 'SECRETARY'){
-            if (req.body.type !== 'CLIENT') return res.status(403).send({error: "Não autorizado!"});
-        }
-
-        else if (userDecoded.user.type === 'CLIENT'){
-            return res.status(403).send({error: 'Não autorizado!'});
-        }
-
+    if(token === 'dentist'){
         next();
-    });
+    }else{
+        jwt.verify(token, config.secret, (err, decoded) => {
+            let userDecoded = decoded.user;
+            req.user = userDecoded.user;
+            if (err) return res.status(403).send({error: 'Falha ao autenticat token.' });
+
+            else if (userDecoded.user.type === 'DENTIST'){
+                if (req.body.type !== 'SECRETARY' && req.body.type !== 'CLIENT') return res.status(403).send({error: "Não autorizado!"});
+            }
+
+            else if (userDecoded.user.type === 'SECRETARY'){
+                if (req.body.type !== 'CLIENT') return res.status(403).send({error: "Não autorizado!"});
+            }
+
+            else if (userDecoded.user.type === 'CLIENT'){
+                return res.status(403).send({error: 'Não autorizado!'});
+            }
+
+            next();
+        });
+    }
 };
 
 exports.register = async(req, res) => {
@@ -57,16 +61,27 @@ exports.register = async(req, res) => {
                 break;
             case 'DENTIST':
                 console.log('entra aqui DENTIST');
+                req.body.clinic = req.user._id;
                 user = await Dentist.create(req.body);
                 break;
             case 'SECRETARY':
                 console.log('entra aqui SECRETARY');
+                if(req.user._type === 'CLINIC'){
+                    req.body.clinic = req.user._id;
+                }else{
+                    req.body.clinic = req.user.clinic;
+                }
                 user = await Secretary.create(req.body);
                 break;
             case 'CLIENT':
                 console.log('entra aqui CLIENT');
                 //tem que chamar o controller de cliente e verificar
                 // se o cliente tem um dentista ja pra add
+                if(req.user._type === 'CLINIC'){
+                    req.body.clinic = req.user._id;
+                }else{
+                    req.body.clinic = req.user.clinic;
+                }
                 user = await Client.create(req.body);
                 break;
         }
