@@ -27,15 +27,15 @@ exports.verifyToken = async(req, res, next) => {
             req.user = userDecoded.user;
             if (err) return res.status(403).send({error: 'Falha ao autenticat token.' });
 
-            else if (userDecoded.user.type === 'DENTIST'){
+            else if (userDecoded.user._type === 'DENTIST'){
                 if (req.body.type !== 'SECRETARY' && req.body.type !== 'CLIENT') return res.status(403).send({error: "Não autorizado!"});
             }
 
-            else if (userDecoded.user.type === 'SECRETARY'){
+            else if (userDecoded.user._ype === 'SECRETARY'){
                 if (req.body.type !== 'CLIENT') return res.status(403).send({error: "Não autorizado!"});
             }
 
-            else if (userDecoded.user.type === 'CLIENT'){
+            else if (userDecoded.user._type === 'CLIENT'){
                 return res.status(403).send({error: 'Não autorizado!'});
             }
 
