@@ -1,26 +1,17 @@
-const User = require('../users/user.model')
+const User = require('../users/user.model');
+const response = require('../util/responses');
 
 // User.methods(['get', 'post', 'put', 'delete'])
 
 // User.updateOptions({new: true, runValidators: true})
 
-exports.updateUser = async (userId, callback) => {
+exports.updateUser = async (userId, update, callback) => {
 
-    await User.findByIdAndUpdate(userId).then((result) => {
-
-        callback({
-            status: 200,
-            message: "Atualizado com Sucesso!",
-            data: result
-        });
-
+    await User.findByIdAndUpdate({_id: userId}, {$set: update}).then((result) => {
+        if(!result) callback(response.notFound('Usuário não existe'));
+        else callback(response.ok('Atualizado com Succeso!', result));
     }).catch((err) => {
-        
-        callback({
-            status: 400,
-            message: "Não foi possivel Atualizar o usuario",
-            data: err
-        });
+        callback(response.badRequest('Não foi possivel atualizar'));
     });;
 };
 
