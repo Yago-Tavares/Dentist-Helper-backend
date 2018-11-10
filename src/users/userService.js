@@ -15,4 +15,4 @@ exports.updateUser = async (userId, update, callback) => {
     });;
 };
 
-// module.exports = user
+module.exports = user

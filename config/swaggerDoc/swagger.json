@@ -294,11 +294,8 @@
             "name" : "Update Clinic", 
             "required" : true,
             "schema" : {
-              "required" : [ "id", "name", "email", "phone", "address" ],
+              "required" : ["name", "email", "phone", "address" ],
               "properties" : {
-                "id" : {
-                  "type" : "string"
-                },
                 "name" : {
                   "type" : "string"
                 },
@@ -315,7 +312,6 @@
               },
       
               "example" : {
-                "id" : "123456",
                 "name" : "Mega Dental",
                 "email" : "email@email.com",
                 "phone" : "99999-0000",
@@ -429,11 +425,8 @@
             "name" : "Update dentist", 
             "required" : true,
             "schema" : {
-              "required" : [ "id", "name", "email", "phone", "cpf", "rg", "cro" ],
+              "required" : ["name", "email", "phone", "cpf", "rg", "cro" ],
               "properties" : {
-                "id" : {
-                  "type" : "string"
-                },
                 "name" : {
                   "type" : "string"
                 },
@@ -456,7 +449,6 @@
               },
       
               "example" : {
-                "id" : "123456",
                 "name" : "Mega Dental",
                 "email" : "email@email.com",
                 "phone" : "99999-0000",
@@ -572,11 +564,8 @@
             "name" : "Update Client", 
             "required" : true,
             "schema" : {
-              "required" : [ "id", "name", "email", "phone", "address", "cpf", "dentist", "allergies", "treatment_start_date", "treatment_end_date" ],
+              "required" : ["name", "email", "phone", "address", "cpf", "dentist", "allergies", "treatment_start_date", "treatment_end_date" ],
               "properties" : {
-                "id" : {
-                  "type" : "string"
-                },
                 "name" : {
                   "type" : "string"
                 },
@@ -608,7 +597,6 @@
               },
       
               "example" : {
-                "id" : "123456",
                 "name" : "Mega Dental",
                 "email" : "email@email.com",
                 "phone" : "99999-0000",

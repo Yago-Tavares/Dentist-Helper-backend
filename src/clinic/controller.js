@@ -6,10 +6,10 @@ const clinicService = require('./clinic.service');
 
 exports.verifyToken = async(req, res, next) => {
     const token = req.headers['authorization'];
-    console.log("TOKEN ", token);
     if (!token) return res.status(403).send({error: "Token não fornecido."});
     jwt.verify(token, config.secret, (err, decoded) => {
         let userDecoded = decoded.user;
+        req.user = userDecoded.user;
         if (err) return res.status(403).send({error: 'Falha ao autenticat token.' });
         else if (userDecoded.user._type !== 'CLINIC'){
             return res.status(403).send({error: "Não autorizado!"});
@@ -32,7 +32,6 @@ exports.getAll = async (req, res) => {
 
 exports.getOne = async (req, res) => {
     try {
-        console.log(req.params.id);
         const clinic = await Clinic.findById(req.params.id);
 
         res.status(200).send(clinic);
@@ -45,10 +44,8 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        console.log(req.params.id);
         const clinicId = req.params.id;
         const clinic = await Clinic.deleteOne({ _id: clinicId});
-        console.log(clinic);
         res.status(200).send('Deletado com sucesso!')
     } catch (e) {
         console.log(e);
@@ -58,9 +55,7 @@ exports.delete = async (req, res) => {
 
 exports.update = async (req, res) => {
     try {
-        console.log(req.body);
-        const clinic = await Clinic.findOneAndUpdate({ _id: req.body.id}, req.body);
-        console.log(clinic);
+        const clinic = await Clinic.findOneAndUpdate({ _id: req.user._id}, req.body);
 
         res.status(200).send('Atualizado com sucesso!');
 

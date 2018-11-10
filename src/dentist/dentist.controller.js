@@ -6,11 +6,10 @@ const dentistService = require('./dentist.service');
 
 exports.verifyToken = async(req, res, next) => {
     const token = req.headers['authorization'];
-    console.log("TOKEN ", token);
     if (!token) return res.status(403).send({error: "Token não fornecido."});
     jwt.verify(token, config.secret, (err, decoded) => {
         let userDecoded = decoded.user;
-        console.log(userDecoded);
+        req.user = userDecoded.user;
         if (err) return res.status(403).send({error: 'Falha ao autenticar token.' });
         else if ((userDecoded.user._type !== 'CLINIC') && (userDecoded.user._type !== 'DENTIST')){
             return res.status(403).send({error: "Não autorizado!"});
@@ -54,7 +53,7 @@ exports.delete = async (req, res) => {
 
 exports.update = async (req, res) => {
     try {
-        const dentist = await Dentist.findOneAndUpdate({ _id: req.body.id}, req.body);
+        const dentist = await Dentist.findOneAndUpdate({ _id: req.user._id}, req.body);
 
         res.status(200).send('Atualizado com sucesso!');
 

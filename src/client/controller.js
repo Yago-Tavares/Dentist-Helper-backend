@@ -5,21 +5,20 @@ const config = require('../../config/config.json');
 
 exports.verifyToken = async(req, res, next) => {
     const token = req.headers['authorization'];
-    console.log("TOKEN ", token);
     if (!token) return res.status(403).send({error: "Token não fornecido."});
     jwt.verify(token, config.secret, (err, decoded) => {
         let userDecoded = decoded.user;
+        req.user = userDecoded.user;
         if (err) return res.status(403).send({error: 'Falha ao autenticat token.' });
-        else if (userDecoded.user._type === 'CLIENT'){
-            return res.status(403).send({error: "Não autorizado!"});
-        }
-
         next();
     });
 }
 
 exports.getAll = async (req, res) => {
     try {
+        if (req.user._type === 'CLIENT'){
+            return res.status(403).send({error: "Não autorizado!"});
+        }
         const clients = await Client.find({});
 
         res.status(200).send(clients);
@@ -31,7 +30,9 @@ exports.getAll = async (req, res) => {
 
 exports.getOne = async (req, res) => {
     try {
-        console.log(req.params.id);
+        if (req.user._type === 'CLIENT'){
+            return res.status(403).send({error: "Não autorizado!"});
+        }
         const client = await Client.findById(req.params.id);
 
         res.status(200).send(client);
@@ -44,6 +45,9 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
+        if (req.user._type === 'CLIENT'){
+            return res.status(403).send({error: "Não autorizado!"});
+        }
         const clientId = req.params.id;
         const client = await Client.deleteOne({ _id: clientId});
         res.status(200).send('Deletado com sucesso!')
@@ -55,8 +59,7 @@ exports.delete = async (req, res) => {
 
 exports.update = async (req, res) => {
     try {
-        const client = await Client.findOneAndUpdate({ _id: req.body.id}, req.body);
-
+        const client = await Client.findOneAndUpdate({ _id: req.user._id}, req.body);
         res.status(200).send('Atualizado com sucesso!');
 
     } catch (e) {
@@ -67,6 +70,9 @@ exports.update = async (req, res) => {
 
 exports.getClientsByDentist = async (req, res) => {
     try{
+        if (req.user._type === 'CLIENT'){
+            return res.status(403).send({error: "Não autorizado!"});
+        }
         const dentistId = req.params.id;
         const clients = await Client.find({dentist: dentistId});
 
