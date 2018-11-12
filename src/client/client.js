@@ -59,7 +59,7 @@ const clientSchema = user.discriminator('CLIENT', new mongoose.Schema({
     allergies: { type: String, required: false, default: 'Não possui alergias' },
     treatment_start_date: { type: String, required: false, default: 'Faltando a data de inicio' },
     treatment_end_date: { type: String, required: false, default: 'Faltando a data de fim' },
-    tooth: [toothSchema]
+    tooth: Schema.toothSchema
 }));
 
 module.exports =restful.model('CLIENT');
