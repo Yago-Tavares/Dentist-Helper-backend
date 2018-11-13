@@ -44,7 +44,6 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        console.log(req.params.id);
         const clinicId = req.params.id;
         const clinic = await Clinic.deleteOne({ _id: clinicId});
         console.log(clinic);
