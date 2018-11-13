@@ -63,7 +63,7 @@ exports.update = async (req, res) => {
         const clinic = await Clinic.findOneAndUpdate({ _id: req.body.id}, req.body);
         console.log(clinic);
 
-        res.status(200).send('Atualizado com sucesso!');
+        res.status(200).send('Clicica Atualizado com sucesso!');
 
     } catch (e) {
         console.log(e);
