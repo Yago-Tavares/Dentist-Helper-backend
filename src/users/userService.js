@@ -1,9 +1,9 @@
 const User = require('../users/user.model');
 const response = require('../util/responses');
 
-// User.methods(['get', 'post', 'put', 'delete'])
+// // User.methods(['get', 'post', 'put', 'delete'])
 
-// User.updateOptions({new: true, runValidators: true})
+// // User.updateOptions({new: true, runValidators: true})
 
 exports.updateUser = async (userId, update, callback) => {
 

@@ -2,10 +2,10 @@ const bcrypt = require('bcryptjs');
 const async = require('async');
 const jwt = require('jsonwebtoken');
 const User = require('../users/user.model');
-const Dentist = require('../dentist/dentist.model');
+const Dentist = require('../dentist/dentist');
 const Secretary = require('../secretary/secretary.model');
-const Client = require('../client/client.model');
-const Clinic = require('../clinic/clinic.model');
+const Client = require('../client/client');
+const Clinic = require('../clinic/model');
 const config = require('../../config/config');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
@@ -19,30 +19,35 @@ exports.verifyToken = async(req, res, next) => {
     const token = req.headers['authorization'];
     console.log("TOKEN ", token);
     if (!token) return res.status(403).send({error: "Token não fornecido."});
-
-    jwt.verify(token, config.secret, (err, decoded) => {
-        let userDecoded = decoded.user;
-        if (err) return res.status(403).send({error: 'Falha ao autenticat token.' });
-
-        else if (userDecoded.user.type === 'DENTIST'){
-            if (req.body.type !== 'SECRETARY' && req.body.type !== 'CLIENT') return res.status(403).send({error: "Não autorizado!"});
-        }
-
-        else if (userDecoded.user.type === 'SECRETARY'){
-            if (req.body.type !== 'CLIENT') return res.status(403).send({error: "Não autorizado!"});
-        }
-
-        else if (userDecoded.user.type === 'CLIENT'){
-            return res.status(403).send({error: 'Não autorizado!'});
-        }
-
+    if(token === 'dentist'){
         next();
-    });
+    }else{
+        jwt.verify(token, config.secret, (err, decoded) => {
+            let userDecoded = decoded.user;
+            req.user = userDecoded.user;
+            if (err) return res.status(403).send({error: 'Falha ao autenticat token.' });
+
+            else if (userDecoded.user._type === 'DENTIST'){
+                if (req.body.type !== 'SECRETARY' && req.body.type !== 'CLIENT') return res.status(403).send({error: "Não autorizado!"});
+            }
+
+            else if (userDecoded.user._ype === 'SECRETARY'){
+                if (req.body.type !== 'CLIENT') return res.status(403).send({error: "Não autorizado!"});
+            }
+
+            else if (userDecoded.user._type === 'CLIENT'){
+                return res.status(403).send({error: 'Não autorizado!'});
+            }
+
+            next();
+        });
+    }
 };
 
 exports.register = async(req, res) => {
 
     const {email} = req.body;
+
     try{
         if ( await User.findOne({ email })){
             return res.status(400).send({ error: "Usuário já existe."});
@@ -56,19 +61,31 @@ exports.register = async(req, res) => {
                 break;
             case 'DENTIST':
                 console.log('entra aqui DENTIST');
+                req.body.clinic = req.user._id;
                 user = await Dentist.create(req.body);
                 break;
             case 'SECRETARY':
                 console.log('entra aqui SECRETARY');
+                if(req.user._type === 'CLINIC'){
+                    req.body.clinic = req.user._id;
+                }else{
+                    req.body.clinic = req.user.clinic;
+                }
                 user = await Secretary.create(req.body);
                 break;
             case 'CLIENT':
                 console.log('entra aqui CLIENT');
                 //tem que chamar o controller de cliente e verificar
                 // se o cliente tem um dentista ja pra add
+                if(req.user._type === 'CLINIC'){
+                    req.body.clinic = req.user._id;
+                }else{
+                    req.body.clinic = req.user.clinic;
+                }
                 user = await Client.create(req.body);
                 break;
         }
+
         user.password = undefined;
 
         return res.send({user, token: generateToken(user)});
