@@ -1,6 +1,6 @@
-const Dentist = require('../dentist/dentist');
+const Dentist = require('../dentist/dentist.model');
 const Client = require('../client/client');
-const Secretary = require('../secretary/secretary');
+const Secretary = require('../secretary/secretary.model');
 
 exports.getAllDentists = async (clinicId, callback) =>{
 

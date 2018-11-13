@@ -1,4 +1,4 @@
-const Operation = require('./model');
+const Operation = require('./operation.model');
 const async = require('async');
 
 exports.getAll = async (req, res) => {
