@@ -1,4 +1,5 @@
 const Clinic = require('./clinic.model');
+const User = require('./../users/user.model');
 const jwt = require('jsonwebtoken');
 const config = require('../.././config/config.json');
 const clinicService = require('./clinic.service');
@@ -6,10 +7,8 @@ const clinicService = require('./clinic.service');
 
 exports.verifyToken = async(req, res, next) => {
     const token = req.headers['authorization'];
-    console.log("TOKEN ", token);
     if (!token) return res.status(403).send({error: "Token não fornecido."});
     jwt.verify(token, config.secret, (err, decoded) => {
-        console.log(decoded.user)
         let userDecoded = decoded.user;
         if (err) return res.status(403).send({error: 'Falha ao autenticat token.' });
         else if (userDecoded.user._type !== 'CLINIC'){
@@ -33,7 +32,6 @@ exports.getAll = async (req, res) => {
 
 exports.getOne = async (req, res) => {
     try {
-        console.log(req.params.id);
         const clinic = await Clinic.findById(req.params.id);
 
         res.status(200).send(clinic);
@@ -59,9 +57,7 @@ exports.delete = async (req, res) => {
 
 exports.update = async (req, res) => {
     try {
-        console.log(req.body);
         const clinic = await Clinic.findOneAndUpdate({ _id: req.body.id}, req.body);
-        console.log(clinic);
 
         res.status(200).send({message: "Clicica Atualizado com sucesso!"});
 

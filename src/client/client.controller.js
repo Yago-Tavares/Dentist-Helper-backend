@@ -50,7 +50,7 @@ exports.delete = async (req, res) => {
         }
         const clientId = req.params.id;
         const client = await Client.deleteOne({ _id: clientId});
-        res.status(200).send('Deletado com sucesso!')
+        res.status(200).send({message: 'Deletado com sucesso!'})
     } catch (e) {
         console.log(e);
         res.status(400).send('Falha ao remover. ' + e);
