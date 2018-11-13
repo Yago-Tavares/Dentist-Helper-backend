@@ -39,7 +39,7 @@ exports.delete = async (req, res) => {
             res.status(response.status).send(response);
         });
     } catch (e) {
-        res.status(400).send('Falha ao remover. ' + e);
+        res.status(400).send({message: 'Falha ao remover. ' + e} );
     }
 };
 
@@ -50,7 +50,7 @@ exports.update = async (req, res) => {
         })
 
     } catch (e) {
-        res.status(400).send('Falha ao atualizar. ' + e);
+        res.status(400).send({message: 'Falha ao atualizar. ' + e});
     }
 };
 

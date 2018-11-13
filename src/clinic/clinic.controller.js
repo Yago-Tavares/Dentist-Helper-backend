@@ -48,10 +48,10 @@ exports.delete = async (req, res) => {
         const clinicId = req.params.id;
         const clinic = await Clinic.deleteOne({ _id: clinicId});
         console.log(clinic);
-        res.status(200).send('Deletado com sucesso!')
+        res.status(200).send({message: 'Deletado com sucesso!'})
     } catch (e) {
         console.log(e);
-        res.status(400).send('Falha ao remover. ' + e);
+        res.status(400).send({message: 'Falha ao remover. ' + e });
     }
 };
 
@@ -63,7 +63,7 @@ exports.update = async (req, res) => {
 
     } catch (e) {
         console.log(e);
-        res.status(400).send('Falha ao atualizar. ' + e);
+        res.status(400).send({message: 'Falha ao atualizar. ' + e} );
     }
 };
 

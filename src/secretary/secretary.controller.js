@@ -44,9 +44,9 @@ exports.delete = async (req, res) => {
     try {
         const secretaryId = req.params.id;
         const secretary = await Secretary.deleteOne({ _id: secretaryId});
-        res.status(200).send('Deletado com sucesso!')
+        res.status(200).send({message: 'Deletado com sucesso!'})
     } catch (e) {
-        res.status(400).send('Falha ao remover. ' + e);
+        res.status(400).send({message: 'Falha ao remover. ' + e});
     }
 };
 
@@ -54,11 +54,11 @@ exports.update = async (req, res) => {
     try {
         const secretary = await Secretary.findOneAndUpdate({ _id: req.user._id}, req.body);
 
-        res.status(200).send('Atualizado com sucesso!');
+        res.status(200).send({message: 'Atualizado com sucesso!'});
 
     } catch (e) {
         console.log(e);
-        res.status(400).send('Falha ao atualizar. ' + e);
+        res.status(400).send({message: 'Falha ao atualizar. ' + e});
     }
 };
 

@@ -49,22 +49,22 @@ exports.delete = async (req, res) => {
             return res.status(403).send({error: "Não autorizado!"});
         }
         const clientId = req.params.id;
-        const client = await Client.deleteOne({ _id: clientId});
+        await Client.deleteOne({ _id: clientId});
         res.status(200).send({message: 'Deletado com sucesso!'})
     } catch (e) {
         console.log(e);
-        res.status(400).send('Falha ao remover. ' + e);
+        res.status(400).send({message: 'Falha ao remover. ' + e});
     }
 };
 
 exports.update = async (req, res) => {
     try {
         const client = await Client.findOneAndUpdate({ _id: req.user._id}, req.body);
-        res.status(200).send('Atualizado com sucesso!');
+        res.status(200).send({message: 'Atualizado com sucesso!'});
 
     } catch (e) {
         console.log(e);
-        res.status(400).send('Falha ao atualizar. ' + e);
+        res.status(400).send({message: 'Falha ao atualizar. '+ e} );
     }
 };
 
@@ -78,7 +78,7 @@ exports.getClientsByDentist = async (req, res) => {
 
         res.status(200).send(clients);
     }catch (e) {
-        res.status(400).send('Falha ao retornar clientes. ' + e);
+        res.status(400).send({message: 'Falha ao retornar clientes. ' + e});
     }
 };
 

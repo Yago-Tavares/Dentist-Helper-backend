@@ -49,7 +49,7 @@ exports.update = ('/update-dentist', async (req, res) => {
         });
     } catch (e) {
         console.log(e);
-        res.status(400).send('Falha ao atualizar. ' + e);
+        res.status(400).send({message: 'Falha ao atualizar. ' + e} );
     }
 });
 
@@ -60,11 +60,11 @@ exports.delete = ('/delete-dentist', async (req, res) => {
             res.status(response.status).send(response);
         });
     } catch (e) {
-        res.status(400).send('Falha ao remover. ' + e);
+        res.status(400).send({message: 'Falha ao remover. ' + e });
     }
 });
 
-exports.getAllClients = ('/getAll',async (req, res) => {
+exports.getAllClients = ('/getAll', async (req, res) => {
 
     try {
         await dentistService.getAllClients(req.params.id, (response) => {
