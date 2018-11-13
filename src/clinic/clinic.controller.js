@@ -46,7 +46,6 @@ exports.delete = async (req, res) => {
     try {
         const clinicId = req.params.id;
         const clinic = await Clinic.deleteOne({ _id: clinicId});
-        console.log(clinic);
         res.status(200).send({message: 'Deletado com sucesso!'})
     } catch (e) {
         console.log(e);
