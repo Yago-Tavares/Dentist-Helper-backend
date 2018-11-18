@@ -1,4 +1,4 @@
-const Secretary = require('./secretary');
+const Secretary = require('./secretary.model');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
 
@@ -20,9 +20,10 @@ exports.verifyToken = async(req, res, next) => {
 
 exports.getAll = async (req, res) => {
     try {
-        const secretarys = await Secretary.find({});
+        const secretaries = await Secretary.find({});
+        console.log(secretaries);
 
-        res.status(200).send(secretarys);
+        res.status(200).send(secretaries);
     } catch (err) {
         res.status(400).send({ error: err.message});
     }
