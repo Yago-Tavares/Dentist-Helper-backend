@@ -751,9 +751,111 @@
             }
           }
         }
+      },
+
+      "/secretary" : {
+        "get" : {
+          "type": "object",
+          "tags" : [ "Secretary" ],
+          "summary" : "Return all secretaries",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "header",
+            "name" : "Authorization",
+            "description" : "Token when logged in",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "All secretaries"
+            },
+            "400" : {
+              "description": "Error"
+            }
+          }
+        },
+        "put" : {
+          "type": "object",
+          "tags" : [ "Secretary" ],
+          "summary" : "Update secretary",
+          "produces" : [ "application/json" ],
+          "parameters" : [
+            {
+              "in" : "header",
+              "name" : "Authorization",
+              "description" : "Token when logged in",
+              "required" : true
+            },
+            {
+              "in" : "body",
+              "name" : "Update Secretary",
+              "required" : true
+            } ],
+          "responses" : {
+            "200" : {
+              "description" : "Atualizado com sucesso!"
+            },
+            "400" : {
+              "description": "Falha ao atualizar."
+            }
+          }
+        }
+      },
+
+      "/secretary/{id}" : {
+        "get" : {
+          "type": "object",
+          "tags" : [ "Secretary" ],
+          "summary" : "Return secretary by ID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "header",
+            "name" : "Authorization",
+            "description" : "Token when logged in",
+            "required" : true
+          },
+            {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Secretary ID",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Secretary returned!"
+            },
+            "400" : {
+              "description": "Error"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "type": "object",
+        "tags" : [ "Secretary" ],
+        "summary" : "Delete secretary",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "Authorization",
+          "description" : "Token when logged in",
+          "required" : true
+        },
+          {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Secretary ID",
+            "required" : true
+          } ],
+        "responses" : {
+          "200" : {
+            "description" : "Deletado com sucesso!"
+          },
+          "400" : {
+            "description": "Falha ao remover."
+          }
+        }
       }
-
-
     },
 
     "definitions" : {
