@@ -1,0 +1,273 @@
+{
+    "swagger" : "2.0",
+    "info" : {
+      "description" : "A Web Development class project.",
+      "version" : "1.0.0",
+      "title" : "Dentist Helper",
+      "license" : {
+        "name" : "MIT",
+        "url" : "https://opensource.org/licenses/MIT"
+      }
+    },
+  
+  
+    "host" : "localhost:3030",
+    "basePath" : "/",
+    "tags" : [ {
+      "name" : "Login",
+      "description" : "API for users login in the system"
+    } ],
+    "schemes" : [ "http" ],
+    "consumes" : [ "application/json" ],
+    "produces" : [ "application/json" ],
+    "paths" : {
+      
+      "/login" : {
+        "post" : {
+          "type": "object",
+          "tags" : [ "Login" ],
+          "summary" : "Authenticate a user in the system",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "Username and Password",
+            "description" : "User that we want to authenticate",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/Login"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Login OK",
+              "schema" : {
+                "$ref" : "#/definitions/Response"
+              }
+            }
+          }
+        }
+      },
+
+      "/forgot" : {
+        "post" : {
+          "type": "object",
+          "tags" : [ "Login" ],
+          "summary" : "Recover user password in the system",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "Email user",
+            "description" : "User that wants to recover the password",
+            "required" : true,
+            "schema" : {
+                "$ref" : "#/definitions/Request - Forgot Password"
+              }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Um email foi enviado para User com mais instruções."
+            },
+            "400" : {
+                "description": "Não existe uma conta com o endereço de e-mail inserido."
+            }
+          }
+        }
+      },
+      
+      "/reset/:token" : {
+        "post" : {
+          "type": "string",
+          "tags" : [ "Login" ],
+          "summary" : "Reset user password in the system",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "Password",
+            "description" : "User that wants to reset the password",
+            "required" : true,
+            "schema" : {
+                "$ref" : "#/definitions/Request - Reset Password"
+              }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "A senha foi alterada."
+            },
+            "400" : {
+                "description" : "Token de recuperação de senha expirado ou inválido."
+            }
+          }
+        }
+      },
+
+      "/password/:id" : {
+        "put" : {
+          "type": "string",
+          "tags" : [ "Login" ],
+          "summary" : "Update user password in the system",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "Old Password and New Password",
+            "description" : "User that wants to update the password",
+            "required" : true,
+            "schema" : {
+                "$ref" : "#/definitions/Request - Update Password"
+              }
+          } ],
+          "responses" : {
+            "201" : {
+              "description" : "A senha foi alterada com sucesso."
+            },
+            "400" : {
+                "description" : "A senha não foi alterada. Você deve informar corretamente a senha anterior."
+            },
+            "404" : {
+                "description" : "Usuário não encontrado." 
+            },
+            "500" : {
+                "description" : "Internal Server Error!" 
+            }
+          }
+        }
+      },
+
+      "/register" : {
+        "post" : {
+          "type": "object",
+          "tags" : [ "User" ],
+          "summary" : "Register a user in the system",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "User",
+            "description" : "User that we want to register",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/Register"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "user successfully registered",
+              "schema" : {
+                "$ref" : "#/definitions/Response"
+              }
+            },
+            "400" : {
+                "description": "Usuário já existe."
+            }
+          }
+        }
+      }
+    },
+
+    "definitions" : {
+        "Register" : {
+        "required" : [ "name", "email", "password", "type" ],
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "name" : "User",
+          "email" : "user@email.com",
+          "password": "user123",
+          "type" : "CLIENT"
+        }
+        }, 
+
+        "Login" : {
+        "properties" : {
+            "email" : {
+              "type" : "string"
+            },
+            "password" : {
+              "type" : "string"
+            }
+          },
+          "example" : {
+            "email" : "user@email.com",
+            "password" : "user123"
+          }
+        },
+
+        "Response" : {
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          },
+          "token" : "string"
+        },
+        "example" : {
+          "user": {
+            "name" : "User",
+            "email" : "user@email.com",
+            "password": "user123",
+            "type" : "CLIENT"
+          },
+          "token": "string"
+        }
+        },
+
+        "Request - Forgot Password" : {
+            "properties" : {
+                "email" : {
+                    "type" : "string"
+                }
+            },
+
+            "example" : {
+                "email" : "user@email.com"
+            }
+        },
+
+        "Request - Reset Password" : {
+            "properties" : {
+                "password" : {
+                    "type" : "string"
+                }
+            },
+
+            "example" : {
+                "password" : "user123#$"
+            }
+        },
+
+        "Request - Update Password" : {
+            "properties" : {
+                "oldPassword" : {
+                    "type" : "string"
+                },
+
+                "newPassword" : {
+                    "type" : "string"
+                }
+            },
+
+            "example" : {
+                "oldPassword" : "user123",
+                "newPassword" : "user123#$"
+            }
+        }
+    }
+}
