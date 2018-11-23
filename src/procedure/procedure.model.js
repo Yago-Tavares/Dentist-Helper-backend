@@ -2,10 +2,11 @@ const restful = require('node-restful');
 const mongoose = restful.mongoose;
 
 const procedureSchema = new mongoose.Schema({
-    title: {
+    tipo: {
         type: String,
-        required: [true, 'Nome da Operação é obrigatório'],
-        trim: true
+        enum: ['CIRURGIA', 'CANAL', 'RESTAURAÇÃO', 'CLAREAMENTO', 'APLICAÇÃO DE APARELHO', 'MANUTENÇÃO DE APARELHO', 'LIMPEZA', 'IMPLANTE', 'PRÓTESE', 'LENTE DE CONTATO'],
+        default: 'LIMPEZA',
+        required: [true, 'Tipo da Operação é obrigatório']
     },
     description: {
         type: String,
@@ -17,11 +18,12 @@ const procedureSchema = new mongoose.Schema({
         required: [true, 'Data da operação é obrigatória'],
         trim: true
     },
-    value: {
-        type: Number,
-        required: [true, 'Valor da operação é obrigatório'],
-        trim: true
-    }
+    teeth: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tooth',
+        default: null,
+        required: true
+    }]
 });
 
 module.exports = restful.model('Procedure', procedureSchema);

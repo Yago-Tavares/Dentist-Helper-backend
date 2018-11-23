@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const login = require('../src/login/login.routes');
 const procedure = require('../src/procedure/procedure.routes');
+const tooth = require('../src/tooth/tooth.routes');
 const clinic = require('../src/clinic/clinic.routes');
 const dentist = require('../src/dentist/dentist.routes');
 const client = require('../src/client/client.routes');
@@ -19,6 +20,7 @@ module.exports = function(server) {
     server.use('/', dentist);
     server.use('/', client);
     server.use('/', user);
+    server.use('/', tooth);
 
     server.use('/',swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     // const userService = require('../src/users/userService')

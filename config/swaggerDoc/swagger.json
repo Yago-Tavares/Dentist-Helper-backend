@@ -11,7 +11,7 @@
     },
   
   
-    "host" : "dentist-helper.herokuapp.com",
+    "host" : "localhost:3030",
     "basePath" : "/",
     "tags" : [ {
       "name" : "Login",
@@ -751,7 +751,122 @@
             }
           }
         }
+      },
+
+      "/tooth" : {
+        "post" : {
+          "type": "object",
+          "tags" : [ "Tooth" ],
+          "summary" : "Register a tooth in the system",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "Tooth",
+            "description" : "Tooth that we want to register",
+            "required" : true,
+            "schema" : {
+              "$ref":"#/definitions/Tooth"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Tooth successfully registered"
+            },
+            "400" : {
+                "description": "Anything is wrong. Try again."
+            }
+          }
+        },
+
+        "get" : {
+          "type": "object",
+          "tags" : [ "Tooth" ],
+          "summary" : "Return all teeth",
+          "produces" : [ "application/json" ],
+          "responses" : {
+            "200" : {
+              "description" : "All teeth"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        }
+      },
+
+      "/tooth/{id}" : {
+        "get" : {
+          "type": "object",
+          "tags" : [ "Tooth" ],
+          "summary" : "Return tooth by ID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Tooth ID",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Tooth returned!"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        },
+
+        "delete" : {
+          "type": "object",
+          "tags" : [ "Tooth" ],
+          "summary" : "Delete tooth in the user",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Tooth ID",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Deletado com sucesso!"
+            },
+            "400" : {
+                "description": "Falha ao remover."
+            }
+          }
+        },
+
+        "put" : {
+          "type": "object",
+          "tags" : [ "Tooth" ],
+          "summary" : "Update tooth in user",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Tooth ID",
+            "required" : true
+            }, 
+            {
+            "in" : "body",
+            "name" : "Update tooth", 
+            "required" : true,
+            "schema" : {
+              "$ref":"#/definitions/Tooth - UPDATE"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "OK"
+            },
+            "400" : {
+                "description": "Error 400"
+            }
+          }
+        }
       }
+
 
 
     },
@@ -897,6 +1012,30 @@
             "value" : "R$ 350,00"
           }
         },
+
+        "Tooth" : {
+          "required" : [ "type", "specification", "procedures"],
+          "properties" : {
+            "type" : {
+              "type" : "string"
+            },
+            "specification" : {
+              "type" : "string"
+            }
+          },
+  
+          "example" : {
+            "type" : "INCISIVO",
+            "specification" : "SUPERIOR ESQUERDO"
+          }
+          },
+
+          "Tooth - UPDATE" : {  
+            "example" : {
+              "type" : "INCISIVO",
+              "specification" : "SUPERIOR ESQUERDO"
+            }
+          },
 
         "Clinic" : {
           "required" : [ "name", "email", "password", "phone", "address" ],

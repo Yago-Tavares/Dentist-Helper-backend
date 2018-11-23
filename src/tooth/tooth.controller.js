@@ -1,8 +1,8 @@
-const procedureService = require('./procedure.service')
+const toothService = require('../tooth/tooth.service')
 
 exports.getAll = async (req, res) => {
     try {
-        procedureService.getAllProcedures((response) => {
+        toothService.getAllTeeth((response) => {
             res.status(response.status).send(response);
         });
     } catch (e) {
@@ -12,7 +12,7 @@ exports.getAll = async (req, res) => {
 
 exports.getOne = async (req, res) => {
     try {
-        await procedureService.getOneProcedure(req.params.id, (response) => {
+        await toothService.getOneTooth(req.params.id, (response) => {
             res.status(response.status).send(response);
         });
     } catch (e) {
@@ -23,7 +23,7 @@ exports.getOne = async (req, res) => {
 
 exports.create = async (req, res) => {
     try{
-        await procedureService.createProcedure(req.body, (response) => {
+        await toothService.createTooth(req.body, (response) => {
             res.status(response.status).send(response);
         }) 
 
@@ -35,7 +35,7 @@ exports.create = async (req, res) => {
 exports.delete = async (req, res) => {
     try {
 
-        await procedureService.deleteProcedure(req.params.id, (response) => {
+        await toothService.deleteTooth(req.params.id, (response) => {
             res.status(response.status).send(response);
         });
     } catch (e) {
@@ -45,7 +45,7 @@ exports.delete = async (req, res) => {
 
 exports.update = async (req, res) => {
     try {
-        await proceduresService.updateProcedure(req.params.id, (response) => {
+        await toothService.updateTooth(req.params.id, (response) => {
             res.status(response.status).send(response);
         })
 
