@@ -35,8 +35,8 @@
       "description": "API for client"
     },
     {
-      "name":"Operation",
-      "description": "API for operations"
+      "name":"Procedure",
+      "description": "API for procedures"
     } ],
     "schemes" : [ "http", "https" ],
     "consumes" : [ "application/json" ],
@@ -650,24 +650,24 @@
         }
       },
 
-      "/operation" : {
+      "/procedure" : {
         "post" : {
           "type": "object",
-          "tags" : [ "Operation" ],
-          "summary" : "Register a operation in the system",
+          "tags" : [ "Procedure" ],
+          "summary" : "Register a procedure in the system",
           "produces" : [ "application/json" ],
           "parameters" : [ {
             "in" : "body",
-            "name" : "Operation",
-            "description" : "Operation that we want to register",
+            "name" : "Procedure",
+            "description" : "Procedure that we want to register",
             "required" : true,
             "schema" : {
-              "$ref":"#/definitions/Operation"
+              "$ref":"#/definitions/Procedure"
             }
           } ],
           "responses" : {
             "200" : {
-              "description" : "Operation successfully registered"
+              "description" : "Procedure successfully registered"
             },
             "400" : {
                 "description": "Falha ao Salvar."
@@ -677,12 +677,12 @@
 
         "get" : {
           "type": "object",
-          "tags" : [ "Operation" ],
-          "summary" : "Return all operations",
+          "tags" : [ "Procedure" ],
+          "summary" : "Return all procedures",
           "produces" : [ "application/json" ],
           "responses" : {
             "200" : {
-              "description" : "All Operations"
+              "description" : "All procedures"
             },
             "400" : {
                 "description": "Error"
@@ -692,15 +692,15 @@
 
         "put" : {
           "type": "object",
-          "tags" : [ "Operation" ],
-          "summary" : "Update operation in user",
+          "tags" : [ "Procedure" ],
+          "summary" : "Update procedure in user",
           "produces" : [ "application/json" ],
           "parameters" : [ {
             "in" : "body",
-            "name" : "Update Operation", 
+            "name" : "Update Procedure", 
             "required" : true,
             "schema" : {
-              "$ref":"#/definitions/Operation - UPDATE"
+              "$ref":"#/definitions/Procedure - UPDATE"
             }
           } ],
           "responses" : {
@@ -715,8 +715,8 @@
 
         "delete" : {
           "type": "object",
-          "tags" : [ "Operation" ],
-          "summary" : "Delete operation in the user",
+          "tags" : [ "Procedure" ],
+          "summary" : "Delete procedure in the user",
           "produces" : [ "application/json" ],
           "responses" : {
             "200" : {
@@ -730,21 +730,21 @@
 
       },
 
-      "/operation/{id}" : {
+      "/procedure/{id}" : {
         "get" : {
           "type": "object",
-          "tags" : [ "Operation" ],
-          "summary" : "Return operation by ID",
+          "tags" : [ "Procedure" ],
+          "summary" : "Return procedure by ID",
           "produces" : [ "application/json" ],
           "parameters" : [ {
             "in" : "path",
             "name" : "id",
-            "description" : "Operation ID",
+            "description" : "Procedure ID",
             "required" : true
           } ],
           "responses" : {
             "200" : {
-              "description" : "Operation returned!"
+              "description" : "Procedure returned!"
             },
             "400" : {
                 "description": "Error"
@@ -864,7 +864,7 @@
             }
         },
 
-        "Operation" : {
+        "Procedure" : {
         "required" : [ "title", "description", "date", "value" ],
         "properties" : {
           "title" : {
@@ -889,7 +889,7 @@
         }
         },
 
-        "Operation - UPDATE" : {  
+        "Procedure - UPDATE" : {  
           "example" : {
             "title" : "Canal",
             "description" : "Canal no segundo molar",

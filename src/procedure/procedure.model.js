@@ -1,7 +1,7 @@
 const restful = require('node-restful');
 const mongoose = restful.mongoose;
 
-const operationSchema = new mongoose.Schema({
+const procedureSchema = new mongoose.Schema({
     title: {
         type: String,
         required: [true, 'Nome da Operação é obrigatório'],
@@ -24,4 +24,4 @@ const operationSchema = new mongoose.Schema({
     }
 });
 
-module.exports = restful.model('Operation', operationSchema);
+module.exports = restful.model('Procedure', procedureSchema);
