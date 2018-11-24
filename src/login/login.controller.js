@@ -61,6 +61,7 @@ exports.register = async(req, res) => {
                 break;
             case 'DENTIST':
                 console.log('entra aqui DENTIST');
+                console.log(req.user);
                 req.body.clinic = req.user._id;
                 user = await Dentist.create(req.body);
                 break;
