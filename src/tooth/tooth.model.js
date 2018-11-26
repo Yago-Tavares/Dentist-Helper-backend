@@ -10,11 +10,6 @@ const toothSchema =  new mongoose.Schema({
                '41', '42', '43', '44','45','46','47','48'], // inferiores esquerdos
         required: false
     },
-    specification: {
-        type: String,
-        enum: ['SUPERIOR ESQUERDO', 'SUPERIOR DIREITO', 'INFERIOR ESQUERDO', 'INFERIOR DIREITO'],
-        required: false
-    },
     procedures: [{
         type : mongoose.Schema.Types.ObjectId, 
         ref: 'Procedure'
