@@ -980,7 +980,7 @@
         },
 
         "Procedure" : {
-        "required" : [ "type", "description", "teeth" ],
+        "required" : [ "type", "description", "teeth", "client"],
         "properties" : {
           "type" : {
             "type" : "string"
@@ -991,13 +991,17 @@
           "teeth" : {
             "type" : "array",
             "items" : "Integer"
+          },
+          "client" : {
+            "type" : "objectId"
           }
         },
 
         "example" : {
           "type" : "CIRURGIA",
           "description" : "Cirurgia no dente 22",
-          "teeth" : [22]
+          "teeth" : [22],
+          "client" : "1"
         }
         },
 

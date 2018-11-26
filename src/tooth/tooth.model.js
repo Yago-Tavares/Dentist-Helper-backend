@@ -19,7 +19,7 @@ const toothSchema =  new mongoose.Schema({
         ref: 'CLIENT',
         default: null,
         required: true
-    },
+    }
 });
 
 module.exports = restful.model('Tooth', toothSchema);

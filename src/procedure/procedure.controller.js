@@ -26,7 +26,7 @@ exports.getOne = async (req, res) => {
 exports.create = async (req, res) => {
     try{
         var teeth = req.body.teeth;
-        var clientID = req.body.clientID;
+        var clientID = req.body.client;
         var teethIDs
         await Tooth.find({name : teeth, client : clientID}).then((result) => {
             teethIDs = result.map(a => a._id);

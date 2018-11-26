@@ -23,7 +23,13 @@ const procedureSchema = new mongoose.Schema({
         ref: 'Tooth',
         default: null,
         required: true
-    }]
+    }],
+    client: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CLIENT',
+        default: null,
+        required: true
+    }
 });
 
 module.exports = restful.model('Procedure', procedureSchema);
