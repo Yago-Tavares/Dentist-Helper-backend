@@ -980,53 +980,49 @@
         },
 
         "Procedure" : {
-        "required" : [ "title", "description", "date", "value" ],
+        "required" : [ "type", "description", "teeth" ],
         "properties" : {
-          "title" : {
+          "type" : {
             "type" : "string"
           },
           "description" : {
             "type" : "string"
           },
-          "date" : {
-            "type" : "Date"
-          },
-          "value" : {
-            "type" : "string"
+          "teeth" : {
+            "type" : "array",
+            "items" : "Integer"
           }
         },
 
         "example" : {
-          "title" : "Siso",
-          "description" : "Extrair o terceiro molar",
-          "date": "21/05/2016",
-          "value" : "R$ 30,00"
+          "type" : "CIRURGIA",
+          "description" : "Cirurgia no dente 22",
+          "teeth" : [22]
         }
         },
 
         "Procedure - UPDATE" : {  
           "example" : {
-            "title" : "Canal",
+            "type" : "Canal",
             "description" : "Canal no segundo molar",
-            "date": "18/08/2018",
-            "value" : "R$ 350,00"
+            "teeth" : "[22]"
           }
         },
 
         "Tooth" : {
-          "required" : [ "type", "specification", "procedures"],
+          "required" : [ "name", "client"],
           "properties" : {
-            "type" : {
+            "name" : {
               "type" : "string"
             },
-            "specification" : {
-              "type" : "string"
+            "client" : {
+              "type" : "objectId"
             }
           },
   
           "example" : {
-            "type" : "INCISIVO",
-            "specification" : "SUPERIOR ESQUERDO"
+            "name" : "22",
+            "client" : "1"
           }
           },
 

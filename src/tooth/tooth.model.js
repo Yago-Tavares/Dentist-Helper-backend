@@ -13,7 +13,13 @@ const toothSchema =  new mongoose.Schema({
     procedures: [{
         type : mongoose.Schema.Types.ObjectId, 
         ref: 'Procedure'
-    }]
+    }],
+    client: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CLIENT',
+        default: null,
+        required: true
+    },
 });
 
 module.exports = restful.model('Tooth', toothSchema);

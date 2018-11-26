@@ -2,7 +2,7 @@ const restful = require('node-restful');
 const mongoose = restful.mongoose;
 
 const procedureSchema = new mongoose.Schema({
-    tipo: {
+    type: {
         type: String,
         enum: ['CIRURGIA', 'CANAL', 'RESTAURAÇÃO', 'CLAREAMENTO', 'APLICAÇÃO DE APARELHO', 'MANUTENÇÃO DE APARELHO', 'LIMPEZA', 'IMPLANTE', 'PRÓTESE', 'LENTE DE CONTATO'],
         default: 'LIMPEZA',
@@ -15,7 +15,7 @@ const procedureSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        required: [true, 'Data da operação é obrigatória'],
+        required: false,
         trim: true
     },
     teeth: [{

@@ -1,4 +1,6 @@
 const procedureService = require('./procedure.service')
+const Tooth = require('../tooth/tooth.model');
+
 
 exports.getAll = async (req, res) => {
     try {
@@ -23,6 +25,13 @@ exports.getOne = async (req, res) => {
 
 exports.create = async (req, res) => {
     try{
+        var teeth = req.body.teeth;
+        var clientID = req.body.clientID;
+        var teethIDs
+        await Tooth.find({name : teeth, client : clientID}).then((result) => {
+            teethIDs = result.map(a => a._id);
+        });
+        req.body.teeth = teethIDs;
         await procedureService.createProcedure(req.body, (response) => {
             res.status(response.status).send(response);
         }) 
