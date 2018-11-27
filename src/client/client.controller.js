@@ -14,7 +14,7 @@ exports.verifyToken = async(req, res, next) => {
     });
 }
 
-exports.getAll = ('/getAll', async (req, res) => {
+exports.getAll = async (req, res) => {
     try {
         await clientService.getAllClients((response) => {
             res.status(response.status).send(response);
@@ -23,10 +23,10 @@ exports.getAll = ('/getAll', async (req, res) => {
         res.status(400).send({ error: err.message});
     }
 
-});
+};
 
 
-exports.getOne = ('/getOne', async (req, res) => {
+exports.getOne = async (req, res) => {
     try {
         await clientService.getOne(req.params.id, (response) => {
             res.status(response.status).send(response);
@@ -35,9 +35,9 @@ exports.getOne = ('/getOne', async (req, res) => {
         res.status(400).send({ error: e});
     }
 
-});
+};
 
-exports.update = ('/update-client', async (req, res) => {
+exports.update = async (req, res) => {
     try {
         await clientService.updateClient(req.params.id, req.body, (response) => {
             res.status(response.status).send(response);
@@ -45,11 +45,11 @@ exports.update = ('/update-client', async (req, res) => {
     } catch (e) {
         res.status(400).send({message: 'Falha ao atualizar. ' + e} );
     }
-});
+};
 
 
 
-exports.delete = ('/delete-client', async (req, res) => {
+exports.delete = async (req, res) => {
     try {
         const clientId = req.params.id;
         await clientService.deleteClient(clientId, (response) => {
@@ -58,7 +58,7 @@ exports.delete = ('/delete-client', async (req, res) => {
     } catch (e) {
         res.status(400).send({message: 'Falha ao remover. ' + e });
     }
-});
+};
 
 
 exports.getClientsByDentist = async (req, res) => {
