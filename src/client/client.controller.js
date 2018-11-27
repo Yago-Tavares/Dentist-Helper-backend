@@ -21,7 +21,7 @@ exports.getAll = async (req, res) => {
         }
         const clients = await Client.find({});
 
-        res.status(200).send(clients);
+        res.status(200).send({data: clients});
     } catch (err) {
         res.status(400).send({ error: err.message});
     }
