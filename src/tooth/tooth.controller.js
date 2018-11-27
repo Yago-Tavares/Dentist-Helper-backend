@@ -43,6 +43,17 @@ exports.delete = async (req, res) => {
     }
 };
 
+exports.getByClientID = async (req, res) => {
+    try {
+        await toothService.getByClientID(req.params.clientId, (response) => {
+            res.status(response.status).send(response);
+        })
+
+    } catch (e) {
+        res.status(400).send({message: 'Falha ao atualizar. ' + e});
+    }
+};
+
 exports.update = async (req, res) => {
     try {
         await toothService.updateTooth(req.params.id, (response) => {
