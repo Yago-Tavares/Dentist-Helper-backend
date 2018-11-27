@@ -23,7 +23,7 @@ exports.getAll = async (req, res) => {
         const secretaries = await Secretary.find({});
         console.log(secretaries);
 
-        res.status(200).send(secretaries);
+        res.status(200).send({data: secretaries});
     } catch (err) {
         res.status(400).send({ error: err.message});
     }
