@@ -52,6 +52,17 @@ exports.delete = async (req, res) => {
     }
 };
 
+exports.getByClientId = async (req, res) => {
+    try {
+        await procedureService.getByClientID(req.params.clientId, (response) => {
+            res.status(response.status).send(response);
+        })
+
+    } catch (e) {
+        res.status(400).send({message: 'Falha ao atualizar. ' + e});
+    }
+};
+
 exports.update = async (req, res) => {
     try {
         await proceduresService.updateProcedure(req.params.id, (response) => {

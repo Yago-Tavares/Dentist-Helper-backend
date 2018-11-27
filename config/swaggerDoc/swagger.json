@@ -753,6 +753,29 @@
         }
       },
 
+      "/procedure/client/{clientId}" : {
+        "get" : {
+          "type": "object",
+          "tags" : [ "Procedure" ],
+          "summary" : "Return procedures by ClientID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "path",
+            "name" : "clientId",
+            "description" : "Client ID of procedure",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Procedure returned!"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        }
+      },
+
       "/tooth" : {
         "post" : {
           "type": "object",

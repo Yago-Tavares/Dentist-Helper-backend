@@ -51,6 +51,19 @@ exports.deleteProcedure = async (procedureId, callback) => {
 
 };
 
+exports.getByClientID = async (clientId, callback) => {
+    
+    await Procedure.find({client: clientId}).then((result) => {
+        if (result) {
+            callback(response.ok('Procedimentos encontradas!', result));
+        } else {
+            callback(response.notFound('Não existem procedimentos pra esse cliente'));
+        }
+    }).catch((err) => {
+        callback(response.badRequest(err.message));
+    });
+};
+
 exports.updateProcedure = async (procedureId, callback) => {
     
     await Procedure.findByIdAndUpdate({_id: procedureId}).then((result) => {
