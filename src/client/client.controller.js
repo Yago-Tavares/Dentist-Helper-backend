@@ -21,7 +21,7 @@ exports.getAll = async (req, res) => {
         }
         const clients = await Client.find({});
 
-        res.status(200).send(clients);
+        res.status(200).send({data: clients});
     } catch (err) {
         res.status(400).send({ error: err.message});
     }
@@ -35,7 +35,7 @@ exports.getOne = async (req, res) => {
         }
         const client = await Client.findById(req.params.id);
 
-        res.status(200).send(client);
+        res.status(200).send({data: client});
     } catch (e) {
         console.log(e);
         res.status(400).send({ error: e});
@@ -61,7 +61,6 @@ exports.update = async (req, res) => {
     try {
         const client = await Client.findOneAndUpdate({ _id: req.user._id}, req.body);
         res.status(200).send({message: 'Atualizado com sucesso!'});
-
     } catch (e) {
         console.log(e);
         res.status(400).send({message: 'Falha ao atualizar. '+ e} );
@@ -76,7 +75,7 @@ exports.getClientsByDentist = async (req, res) => {
         const dentistId = req.params.id;
         const clients = await Client.find({dentist: dentistId});
 
-        res.status(200).send(clients);
+        res.status(200).send({data: clients});
     }catch (e) {
         res.status(400).send({message: 'Falha ao retornar clientes. ' + e});
     }
