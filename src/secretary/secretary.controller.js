@@ -22,7 +22,7 @@ exports.getAll = async (req, res) => {
     try {
         const secretarys = await Secretary.find({});
 
-        res.status(200).send(secretarys);
+        res.status(200).send({data:secretarys});
     } catch (err) {
         res.status(400).send({ error: err.message});
     }
@@ -33,7 +33,7 @@ exports.getOne = async (req, res) => {
     try {
         const secretary = await Secretary.findById(req.params.id);
 
-        res.status(200).send(secretary);
+        res.status(200).send({data:secretary});
     } catch (e) {
         res.status(400).send({ error: e});
     }
