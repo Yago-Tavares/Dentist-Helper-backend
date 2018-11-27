@@ -1,4 +1,4 @@
-const Secretary = require('./secretary');
+const Secretary = require('./secretary.model');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
 
