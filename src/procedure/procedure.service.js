@@ -1,9 +1,9 @@
-const Operation = require('./operation.model');
+const Procedure = require('./procedure.model');
 const response = require('../util/responses');
 
-exports.getAllOperations = async (callback) => {
+exports.getAllProcedures = async (callback) => {
 
-    await Operation.find({}).then((result) => {
+    await Procedure.find({}).then((result) => {
         if (result) {
             callback(response.ok('Busca Sucesso!', result));
         } else {
@@ -15,9 +15,9 @@ exports.getAllOperations = async (callback) => {
 
 };
 
-exports.getOneOperation = async (operationId, callback) => {
+exports.getOneProcedure = async (procedureId, callback) => {
 
-    await Operation.find({_id: operationId}).then((result) => {
+    await Procedure.find({_id: procedureId}).then((result) => {
         if (result) {
             callback(response.ok('Operação encontrada!', result));
         } else {
@@ -29,10 +29,10 @@ exports.getOneOperation = async (operationId, callback) => {
 
 };
 
-exports.createOperation = async (operation, callback) => {
+exports.createProcedure = async (procedure, callback) => {
 
-    var operation = new Operation(operation);
-    await operation.save().then((result) => {
+    var procedure = new Procedure(procedure);
+    await procedure.save().then((result) => {
         callback(response.created('Operação criada com Sucesso!', result));    
     }).catch((err) => {
         callback(response.badRequest(err.message));
@@ -40,9 +40,9 @@ exports.createOperation = async (operation, callback) => {
 
 };
 
-exports.deleteOperation = async (operationId, callback) => {
+exports.deleteProcedure = async (procedureId, callback) => {
     
-    await Operation.findByIdAndRemove({_id: operationId}).then((result) => {
+    await Procedure.findByIdAndRemove({_id: procedureId}).then((result) => {
         if(result) callback(response.ok('Operação deletada com Sucesso!', ''));
         else callback(response.internalError());
     }).catch((err) => {
@@ -51,9 +51,22 @@ exports.deleteOperation = async (operationId, callback) => {
 
 };
 
-exports.updateOperation = async (operationId, callback) => {
+exports.getByClientID = async (clientId, callback) => {
     
-    await Operation.findByIdAndUpdate({_id: operationId}).then((result) => {
+    await Procedure.find({client: clientId}).then((result) => {
+        if (result) {
+            callback(response.ok('Procedimentos encontradas!', result));
+        } else {
+            callback(response.notFound('Não existem procedimentos pra esse cliente'));
+        }
+    }).catch((err) => {
+        callback(response.badRequest(err.message));
+    });
+};
+
+exports.updateProcedure = async (procedureId, callback) => {
+    
+    await Procedure.findByIdAndUpdate({_id: procedureId}).then((result) => {
         if(result) callback(response.ok('Operação atualizada com Sucesso!', ''));
         else callback(response.internalError());
     }).catch((err) => {

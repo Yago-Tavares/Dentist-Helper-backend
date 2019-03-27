@@ -21,7 +21,6 @@ exports.verifyToken = async(req, res, next) => {
 exports.getAll = async (req, res) => {
     try {
         const secretaries = await Secretary.find({});
-        console.log(secretaries);
 
         res.status(200).send({data: secretaries});
     } catch (err) {

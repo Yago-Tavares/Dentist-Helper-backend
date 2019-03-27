@@ -35,8 +35,8 @@
       "description": "API for client"
     },
     {
-      "name":"Operation",
-      "description": "API for operations"
+      "name":"Procedure",
+      "description": "API for procedures"
     } ],
     "schemes" : [ "http", "https" ],
     "consumes" : [ "application/json" ],
@@ -650,24 +650,24 @@
         }
       },
 
-      "/operation" : {
+      "/procedure" : {
         "post" : {
           "type": "object",
-          "tags" : [ "Operation" ],
-          "summary" : "Register a operation in the system",
+          "tags" : [ "Procedure" ],
+          "summary" : "Register a procedure in the system",
           "produces" : [ "application/json" ],
           "parameters" : [ {
             "in" : "body",
-            "name" : "Operation",
-            "description" : "Operation that we want to register",
+            "name" : "Procedure",
+            "description" : "Procedure that we want to register",
             "required" : true,
             "schema" : {
-              "$ref":"#/definitions/Operation"
+              "$ref":"#/definitions/Procedure"
             }
           } ],
           "responses" : {
             "200" : {
-              "description" : "Operation successfully registered"
+              "description" : "Procedure successfully registered"
             },
             "400" : {
                 "description": "Falha ao Salvar."
@@ -677,12 +677,12 @@
 
         "get" : {
           "type": "object",
-          "tags" : [ "Operation" ],
-          "summary" : "Return all operations",
+          "tags" : [ "Procedure" ],
+          "summary" : "Return all procedures",
           "produces" : [ "application/json" ],
           "responses" : {
             "200" : {
-              "description" : "All Operations"
+              "description" : "All procedures"
             },
             "400" : {
                 "description": "Error"
@@ -692,15 +692,15 @@
 
         "put" : {
           "type": "object",
-          "tags" : [ "Operation" ],
-          "summary" : "Update operation in user",
+          "tags" : [ "Procedure" ],
+          "summary" : "Update procedure in user",
           "produces" : [ "application/json" ],
           "parameters" : [ {
             "in" : "body",
-            "name" : "Update Operation", 
+            "name" : "Update Procedure",
             "required" : true,
             "schema" : {
-              "$ref":"#/definitions/Operation - UPDATE"
+              "$ref":"#/definitions/Procedure - UPDATE"
             }
           } ],
           "responses" : {
@@ -715,8 +715,8 @@
 
         "delete" : {
           "type": "object",
-          "tags" : [ "Operation" ],
-          "summary" : "Delete operation in the user",
+          "tags" : [ "Procedure" ],
+          "summary" : "Delete procedure in the user",
           "produces" : [ "application/json" ],
           "responses" : {
             "200" : {
@@ -730,21 +730,181 @@
 
       },
 
-      "/operation/{id}" : {
+      "/procedure/{id}" : {
         "get" : {
           "type": "object",
-          "tags" : [ "Operation" ],
-          "summary" : "Return operation by ID",
+          "tags" : [ "Procedure" ],
+          "summary" : "Return procedure by ID",
           "produces" : [ "application/json" ],
           "parameters" : [ {
             "in" : "path",
             "name" : "id",
-            "description" : "Operation ID",
+            "description" : "Procedure ID",
             "required" : true
           } ],
           "responses" : {
             "200" : {
-              "description" : "Operation returned!"
+              "description" : "Procedure returned!"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        }
+      },
+
+      "/procedure/client/{clientId}" : {
+        "get" : {
+          "type": "object",
+          "tags" : [ "Procedure" ],
+          "summary" : "Return procedures by ClientID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "path",
+            "name" : "clientId",
+            "description" : "Client ID of procedure",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Procedure returned!"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        }
+      },
+
+      "/tooth" : {
+        "post" : {
+          "type": "object",
+          "tags" : [ "Tooth" ],
+          "summary" : "Register a tooth in the system",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "Tooth",
+            "description" : "Tooth that we want to register",
+            "required" : true,
+            "schema" : {
+              "$ref":"#/definitions/Tooth"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Tooth successfully registered"
+            },
+            "400" : {
+                "description": "Anything is wrong. Try again."
+            }
+          }
+        },
+
+        "get" : {
+          "type": "object",
+          "tags" : [ "Tooth" ],
+          "summary" : "Return all teeth",
+          "produces" : [ "application/json" ],
+          "responses" : {
+            "200" : {
+              "description" : "All teeth"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        }
+      },
+
+      "/tooth/{id}" : {
+        "get" : {
+          "type": "object",
+          "tags" : [ "Tooth" ],
+          "summary" : "Return tooth by ID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Tooth ID",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Tooth returned!"
+            },
+            "400" : {
+                "description": "Error"
+            }
+          }
+        },
+
+        "delete" : {
+          "type": "object",
+          "tags" : [ "Tooth" ],
+          "summary" : "Delete tooth in the user",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Tooth ID",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Deletado com sucesso!"
+            },
+            "400" : {
+                "description": "Falha ao remover."
+            }
+          }
+        },
+
+        "put" : {
+          "type": "object",
+          "tags" : [ "Tooth" ],
+          "summary" : "Update tooth in user",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "path",
+            "name" : "id",
+            "description" : "Tooth ID",
+            "required" : true
+            },
+            {
+            "in" : "body",
+            "name" : "Update tooth",
+            "required" : true,
+            "schema" : {
+              "$ref":"#/definitions/Tooth - UPDATE"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "OK"
+            },
+            "400" : {
+                "description": "Error 400"
+            }
+          }
+        }
+      },
+
+      "/tooth/client/{clientId}" : {
+        "get" : {
+          "type": "object",
+          "tags" : [ "Tooth" ],
+          "summary" : "Return teeth by ClientID",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "path",
+            "name" : "clientId",
+            "description" : "Client ID of tooth",
+            "required" : true
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Tooth returned!"
             },
             "400" : {
                 "description": "Error"
@@ -966,39 +1126,63 @@
             }
         },
 
-        "Operation" : {
-        "required" : [ "title", "description", "date", "value" ],
+        "Procedure" : {
+        "required" : [ "type", "description", "teeth", "client"],
         "properties" : {
-          "title" : {
+          "type" : {
             "type" : "string"
           },
           "description" : {
             "type" : "string"
           },
-          "date" : {
-            "type" : "Date"
+          "teeth" : {
+            "type" : "array",
+            "items" : "Integer"
           },
-          "value" : {
-            "type" : "string"
+          "client" : {
+            "type" : "objectId"
           }
         },
 
         "example" : {
-          "title" : "Siso",
-          "description" : "Extrair o terceiro molar",
-          "date": "21/05/2016",
-          "value" : "R$ 30,00"
+          "type" : "CIRURGIA",
+          "description" : "Cirurgia no dente 22",
+          "teeth" : [22],
+          "client" : "1"
         }
         },
 
-        "Operation - UPDATE" : {  
+        "Procedure - UPDATE" : {
           "example" : {
-            "title" : "Canal",
+            "type" : "Canal",
             "description" : "Canal no segundo molar",
-            "date": "18/08/2018",
-            "value" : "R$ 350,00"
+            "teeth" : "[22]"
           }
         },
+
+        "Tooth" : {
+          "required" : [ "name", "client"],
+          "properties" : {
+            "name" : {
+              "type" : "string"
+            },
+            "client" : {
+              "type" : "objectId"
+            }
+          },
+
+          "example" : {
+            "name" : "22",
+            "client" : "1"
+          }
+          },
+
+          "Tooth - UPDATE" : {
+            "example" : {
+              "type" : "INCISIVO",
+              "specification" : "SUPERIOR ESQUERDO"
+            }
+          },
 
         "Clinic" : {
           "required" : [ "name", "email", "password", "phone", "address" ],

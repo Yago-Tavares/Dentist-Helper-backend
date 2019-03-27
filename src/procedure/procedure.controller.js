@@ -1,8 +1,10 @@
-const operationService = require('../operation/operation.service')
+const procedureService = require('./procedure.service');
+const Tooth = require('../tooth/tooth.model');
+const toothService = require('../tooth/tooth.service');
 
 exports.getAll = async (req, res) => {
     try {
-        operationService.getAllOperations((response) => {
+        procedureService.getAllProcedures((response) => {
             res.status(response.status).send(response);
         });
     } catch (e) {
@@ -12,7 +14,7 @@ exports.getAll = async (req, res) => {
 
 exports.getOne = async (req, res) => {
     try {
-        await operationService.getOneOperation(req.params.id, (response) => {
+        await procedureService.getOneProcedure(req.params.id, (response) => {
             res.status(response.status).send(response);
         });
     } catch (e) {
@@ -23,9 +25,9 @@ exports.getOne = async (req, res) => {
 
 exports.create = async (req, res) => {
     try{
-        await operationService.createOperation(req.body, (response) => {
+        await procedureService.createProcedure(req.body, (response) => {
             res.status(response.status).send(response);
-        }) 
+        })
 
     } catch (e) {
         res.status(400).send({ error: 'Falha ao salvar. ' + e});
@@ -35,7 +37,7 @@ exports.create = async (req, res) => {
 exports.delete = async (req, res) => {
     try {
 
-        await operationService.deleteOperation(req.params.id, (response) => {
+        await procedureService.deleteProcedure(req.params.id, (response) => {
             res.status(response.status).send(response);
         });
     } catch (e) {
@@ -43,9 +45,20 @@ exports.delete = async (req, res) => {
     }
 };
 
+exports.getByClientId = async (req, res) => {
+    try {
+        await procedureService.getByClientID(req.params.clientId, (response) => {
+            res.status(response.status).send(response);
+        })
+
+    } catch (e) {
+        res.status(400).send({message: 'Falha ao atualizar. ' + e});
+    }
+};
+
 exports.update = async (req, res) => {
     try {
-        await operationService.updateOperation(req.params.id, (response) => {
+        await proceduresService.updateProcedure(req.params.id, (response) => {
             res.status(response.status).send(response);
         })
 

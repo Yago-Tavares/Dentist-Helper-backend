@@ -62,7 +62,7 @@ exports.delete = async (req, res) => {
 
 
 exports.getClientsByDentist = async (req, res) => {
-    
+
     try {
         await dentistService.getAllClientsByDentist(req.params.id, (response) => {
             res.status(response.status).send(response);

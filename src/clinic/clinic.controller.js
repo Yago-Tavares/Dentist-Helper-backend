@@ -57,7 +57,7 @@ exports.update = async (req, res) => {
     try {
         const clinic = await Clinic.findOneAndUpdate({ _id: req.body.id}, req.body);
 
-        res.status(200).send({message: "Clicica Atualizado com sucesso!"});
+        res.status(200).send({message: "Clinica Atualizado com sucesso!"});
 
     } catch (e) {
         console.log(e);
