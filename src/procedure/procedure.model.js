@@ -16,14 +16,13 @@ const procedureSchema = new mongoose.Schema({
     date: {
         type: Date,
         required: false,
+        default: Date.now(),
         trim: true
     },
-    teeth: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tooth',
-        default: null,
+    teeth: {
+        type: [String],
         required: true
-    }],
+    },
     client: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'CLIENT',
