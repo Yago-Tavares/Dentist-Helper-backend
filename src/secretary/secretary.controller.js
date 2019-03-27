@@ -20,9 +20,9 @@ exports.verifyToken = async(req, res, next) => {
 
 exports.getAll = async (req, res) => {
     try {
-        const secretarys = await Secretary.find({});
+        const secretaries = await Secretary.find({});
 
-        res.status(200).send({data:secretarys});
+        res.status(200).send({data: secretaries});
     } catch (err) {
         res.status(400).send({ error: err.message});
     }
@@ -33,7 +33,7 @@ exports.getOne = async (req, res) => {
     try {
         const secretary = await Secretary.findById(req.params.id);
 
-        res.status(200).send({data:secretary});
+        res.status(200).send(secretary);
     } catch (e) {
         res.status(400).send({ error: e});
     }

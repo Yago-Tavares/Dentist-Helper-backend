@@ -5,9 +5,9 @@ const procedure = require('../src/procedure/procedure.routes');
 const tooth = require('../src/tooth/tooth.routes');
 const clinic = require('../src/clinic/clinic.routes');
 const dentist = require('../src/dentist/dentist.routes');
-const secretary = require('../src/secretary/secretary.routes');
 const client = require('../src/client/client.routes');
 const user = require('../src/users/user.routes');
+const secretary = require('../src/secretary/secretary.routes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swaggerDoc/swagger.json');
 

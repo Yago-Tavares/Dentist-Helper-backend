@@ -1,4 +1,3 @@
-const Dentist = require('./dentist.model');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
 const dentistService = require('./dentist.service');
@@ -19,16 +18,16 @@ exports.verifyToken = async(req, res, next) => {
     });
 }
 
-exports.getAll = ('/getAll', async (req, res) => {
-    try {
-        await dentistService.getAllDentists((response) => {
-            res.status(response.status).send(response);
-        });
-    } catch (err) {
-        res.status(400).send({ error: err.message});
-    }
-
-});
+exports.getAll = ('/getAll', async (req, res) => { 
+    try { 
+        await dentistService.getAllDentists((response) => { 
+            res.status(response.status).send(response); 
+        }); 
+    } catch (err) { 
+        res.status(400).send({ error: err.message}); 
+    } 
+ 
+}); 
 
 exports.getOne = ('/getOne', async (req, res) => {
     try {

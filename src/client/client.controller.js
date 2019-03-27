@@ -1,6 +1,6 @@
-const Client = require('./client.model');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config.json');
+const clientService = require('../client/client.service')
 
 
 exports.verifyToken = async(req, res, next) => {
@@ -16,68 +16,60 @@ exports.verifyToken = async(req, res, next) => {
 
 exports.getAll = async (req, res) => {
     try {
-        if (req.user._type === 'CLIENT'){
-            return res.status(403).send({error: "Não autorizado!"});
-        }
-        const clients = await Client.find({});
-
-        res.status(200).send({data: clients});
+        await clientService.getAllClients((response) => {
+            res.status(response.status).send(response);
+        });
     } catch (err) {
         res.status(400).send({ error: err.message});
     }
 
 };
 
+
 exports.getOne = async (req, res) => {
     try {
-        if (req.user._type === 'CLIENT'){
-            return res.status(403).send({error: "Não autorizado!"});
-        }
-        const client = await Client.findById(req.params.id);
-
-        res.status(200).send({data: client});
+        await clientService.getOne(req.params.id, (response) => {
+            res.status(response.status).send(response);
+        });
     } catch (e) {
-        console.log(e);
         res.status(400).send({ error: e});
     }
 
 };
 
-exports.delete = async (req, res) => {
-    try {
-        if (req.user._type === 'CLIENT'){
-            return res.status(403).send({error: "Não autorizado!"});
-        }
-        const clientId = req.params.id;
-        await Client.deleteOne({ _id: clientId});
-        res.status(200).send({message: 'Deletado com sucesso!'})
-    } catch (e) {
-        console.log(e);
-        res.status(400).send({message: 'Falha ao remover. ' + e});
-    }
-};
-
 exports.update = async (req, res) => {
     try {
-        const client = await Client.findOneAndUpdate({ _id: req.user._id}, req.body);
-        res.status(200).send({message: 'Atualizado com sucesso!'});
+        await clientService.updateClient(req.params.id, req.body, (response) => {
+            res.status(response.status).send(response);
+        });
     } catch (e) {
-        console.log(e);
-        res.status(400).send({message: 'Falha ao atualizar. '+ e} );
+        res.status(400).send({message: 'Falha ao atualizar. ' + e} );
     }
 };
 
-exports.getClientsByDentist = async (req, res) => {
-    try{
-        if (req.user._type === 'CLIENT'){
-            return res.status(403).send({error: "Não autorizado!"});
-        }
-        const dentistId = req.params.id;
-        const clients = await Client.find({dentist: dentistId});
 
-        res.status(200).send({data: clients});
-    }catch (e) {
-        res.status(400).send({message: 'Falha ao retornar clientes. ' + e});
+
+exports.delete = async (req, res) => {
+    try {
+        const clientId = req.params.id;
+        await clientService.deleteClient(clientId, (response) => {
+            res.status(response.status).send(response);
+        });
+    } catch (e) {
+        res.status(400).send({message: 'Falha ao remover. ' + e });
+    }
+};
+
+
+exports.getClientsByDentist = async (req, res) => {
+
+    try {
+        await dentistService.getAllClientsByDentist(req.params.id, (response) => {
+            res.status(response.status).send(response);
+        });
+
+    } catch (error) {
+        res.status(response.status).send(response.data);
     }
 };
 
